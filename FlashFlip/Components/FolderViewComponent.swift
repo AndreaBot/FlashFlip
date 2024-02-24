@@ -13,7 +13,6 @@ struct FolderViewComponent: View {
     var body: some View {
         ZStack(alignment: .topLeading) {
             RoundedRectangle(cornerRadius: 20)
-                
                 .foregroundStyle(Colors.setColor(using: folder.colorName))
             
             VStack(alignment: .leading) {
@@ -41,5 +40,5 @@ struct FolderViewComponent: View {
 }
 
 #Preview {
-    FolderViewComponent(folder: FolderModel(id: UUID(), name: "Swift", iconName: "swift", colorName: "orange"))
+   FolderViewComponent(folder: FolderModel(id: UUID(), name: "Swift", iconName: "swift", colorName: "orange"))
 }

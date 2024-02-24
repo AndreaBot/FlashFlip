@@ -21,8 +21,14 @@ struct HomeView: View {
                 ForEach(allFolders) { folder in
                     FolderViewComponent(folder: folder)
                 }
+                .onDelete(perform: { indexSet in
+                    for index in indexSet {
+                        deleteFolder(allFolders[index])
+                    }
+                })
                 .listRowSeparator(.hidden)
                 .listRowBackground(Color.clear)
+                
             }
             .navigationTitle("Flash Flip")
             .toolbar {
@@ -40,6 +46,11 @@ struct HomeView: View {
             CreateFolderView(context: context)
         })
     }
+    
+    func deleteFolder(_ folder: FolderModel) {
+        context.delete(folder)
+    }
+    
 }
 
 #Preview {
