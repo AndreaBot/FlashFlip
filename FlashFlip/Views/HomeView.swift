@@ -22,7 +22,7 @@ struct HomeView: View {
                     NavigationLink {
                         DeckListView(context: context, folder: folder)
                     } label: {
-                        FolderViewComponent(folder: folder)
+                        FolderViewComponent(context: context, folder: folder)
                     }
                     
                 }

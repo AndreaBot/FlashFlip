@@ -11,13 +11,15 @@ import SwiftData
 @Model
 final class CardModel: Identifiable {
     
+    let id: UUID
     let question: String
     let answer: String
-    let deck: DeckModel
     
-    init(question: String, answer: String, deck: DeckModel) {
+    init(id: UUID, question: String, answer: String) {
+        self.id = UUID()
         self.question = question
         self.answer = answer
-        self.deck = deck
+     
     }
+
 }

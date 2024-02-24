@@ -6,10 +6,13 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct FolderViewComponent: View {
     
+    var context: ModelContext
     let folder: FolderModel
+    
     var body: some View {
         ZStack(alignment: .topLeading) {
             RoundedRectangle(cornerRadius: 20)
@@ -40,5 +43,8 @@ struct FolderViewComponent: View {
 }
 
 #Preview {
-   FolderViewComponent(folder: FolderModel(id: UUID(), name: "Swift", iconName: "swift", colorName: "orange"))
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: FolderModel.self, configurations: config)
+    
+    return FolderViewComponent(context: ModelContext(container), folder: FolderModel(id: UUID(), name: "Swift", iconName: "swift", colorName: "orange"))
 }

@@ -20,7 +20,11 @@ struct DeckListView: View {
         NavigationStack {
             List {
                 ForEach(folder.decks) { deck in
-                    Text(deck.name)
+                    NavigationLink {
+                        CardCollectionView(context: context, deck: deck)
+                    } label: {
+                        Text(deck.name)
+                    }
                 }
             }
             .navigationTitle(folder.name)
@@ -51,7 +55,7 @@ struct DeckListView: View {
     }
     
     func createNewDeck() {
-        let newDeck = DeckModel(id: UUID(), name: deckname, cards: [CardModel]())
+        let newDeck = DeckModel(id: UUID(), name: deckname, folder: folder)
         folder.decks.append(newDeck)
         do {
             try context.save()
