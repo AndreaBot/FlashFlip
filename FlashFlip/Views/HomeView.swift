@@ -19,7 +19,12 @@ struct HomeView: View {
         NavigationStack {
             List {
                 ForEach(allFolders) { folder in
-                    FolderViewComponent(folder: folder)
+                    NavigationLink {
+                        DeckListView(context: context, folder: folder)
+                    } label: {
+                        FolderViewComponent(folder: folder)
+                    }
+                    
                 }
                 .onDelete(perform: { indexSet in
                     for index in indexSet {

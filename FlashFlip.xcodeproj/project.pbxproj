@@ -20,6 +20,7 @@
 		62003E942B89FB0B00F888AE /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62003E932B89FB0B00F888AE /* Icons.swift */; };
 		62003E962B89FCFE00F888AE /* IconGridViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62003E952B89FCFE00F888AE /* IconGridViewComponent.swift */; };
 		62003E9A2B8A018200F888AE /* ColorsGridItemViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62003E992B8A018200F888AE /* ColorsGridItemViewComponent.swift */; };
+		62003E9C2B8A13A900F888AE /* DeckListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62003E9B2B8A13A900F888AE /* DeckListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		62003E932B89FB0B00F888AE /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
 		62003E952B89FCFE00F888AE /* IconGridViewComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconGridViewComponent.swift; sourceTree = "<group>"; };
 		62003E992B8A018200F888AE /* ColorsGridItemViewComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorsGridItemViewComponent.swift; sourceTree = "<group>"; };
+		62003E9B2B8A13A900F888AE /* DeckListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 			children = (
 				62003E782B89ED8000F888AE /* HomeView.swift */,
 				62003E902B89FA9A00F888AE /* CreateFolderView.swift */,
+				62003E9B2B8A13A900F888AE /* DeckListView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -189,6 +192,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				62003E792B89ED8000F888AE /* HomeView.swift in Sources */,
+				62003E9C2B8A13A900F888AE /* DeckListView.swift in Sources */,
 				62003E8B2B89F1A800F888AE /* Colors.swift in Sources */,
 				62003E852B89EEF200F888AE /* FolderModel.swift in Sources */,
 				62003E8F2B89F5A800F888AE /* CardModel.swift in Sources */,
