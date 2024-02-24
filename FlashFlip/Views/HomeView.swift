@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
-struct ContentView: View {
+struct HomeView: View {
     
-    @State private var allFolders = [FolderModel]()
+    @Environment(\.modelContext) private var context
+    @Query var allFolders: [FolderModel]
     
     @State private var showingNewFolderView = false
     
@@ -19,8 +21,9 @@ struct ContentView: View {
                 ForEach(allFolders) { folder in
                     FolderViewComponent(folder: folder)
                 }
+                .listRowSeparator(.hidden)
+                .listRowBackground(Color.clear)
             }
-            .padding()
             .navigationTitle("Flash Flip")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -28,16 +31,17 @@ struct ContentView: View {
                         showingNewFolderView = true
                     } label: {
                         Image(systemName: "plus")
+                            .fontWeight(.semibold)
                     }
                 }
             }
         }
         .sheet(isPresented: $showingNewFolderView, content: {
-            CreateFolderView(allFolders: allFolders)
+            CreateFolderView(context: context)
         })
     }
 }
 
 #Preview {
-    ContentView()
+    HomeView()
 }

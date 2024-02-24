@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import SwiftData
 
-class FolderModel: Identifiable {
+@Model
+final class FolderModel: Identifiable {
     
     let id: UUID
     let name: String

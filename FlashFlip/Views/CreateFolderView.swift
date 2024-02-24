@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct CreateFolderView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @State var allFolders: [FolderModel]
+    var context: ModelContext
     
     var columns = [
         GridItem(.adaptive(minimum: UIScreen.main.bounds.width/6))
@@ -58,7 +59,7 @@ struct CreateFolderView: View {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Done") {
                         let newFolder = FolderModel(id: UUID(), name: folderName, iconName: folderIconName, colorName: folderColorName)
-                        allFolders.append(newFolder)
+                        context.insert(newFolder)
                         dismiss()
                     }
                 }
@@ -68,8 +69,9 @@ struct CreateFolderView: View {
 }
 
 #Preview {
-    CreateFolderView(allFolders: [FolderModel(id: UUID(), name: "A", iconName: "swift", colorName: "yellow"),
-                                 FolderModel(id: UUID(), name: "B", iconName: "plus", colorName: "blue")]
-    )
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: FolderModel.self, configurations: config)
+    
+    return CreateFolderView(context: ModelContext(container))
 }
 

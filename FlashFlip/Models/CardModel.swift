@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import SwiftData
 
-class CardModel: Identifiable {
+@Model
+final class CardModel: Identifiable {
     
     let question: String
     let answer: String

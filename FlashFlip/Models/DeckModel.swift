@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import SwiftData
 
-class DeckModel: Identifiable {
+@Model
+final class DeckModel: Identifiable {
     
     let id: UUID
     var name: String
