@@ -16,6 +16,10 @@ struct DeckListView: View {
     @State private var deckname = ""
     @State private var showingPopUp = false
     
+    var columns = [
+        GridItem(.adaptive(minimum: UIScreen.main.bounds.width/3))
+    ]
+    
     var body: some View {
         NavigationStack {
             List {
@@ -23,9 +27,11 @@ struct DeckListView: View {
                     NavigationLink {
                         CardCollectionView(context: context, deck: deck)
                     } label: {
-                        Text(deck.name)
+                        DeckViewComponent(context: context, deck: deck)
                     }
                 }
+                .listRowSeparator(.hidden)
+                .listRowBackground(Color.clear)
             }
             .navigationTitle(folder.name)
             .toolbar {
@@ -51,7 +57,6 @@ struct DeckListView: View {
                 }
             }
         }
-        
     }
     
     func createNewDeck() {

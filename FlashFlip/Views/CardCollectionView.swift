@@ -45,9 +45,9 @@ struct CardCollectionView: View {
 }
 
 
-#Preview {
-    let config = ModelConfiguration(isStoredInMemoryOnly: true)
-    let container = try! ModelContainer(for: FolderModel.self, configurations: config)
-    
-    return CardCollectionView(context: ModelContext(container), deck: DeckModel(id: UUID(), name: "Test"))
-}
+//#Preview {
+//    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+//    let container = try! ModelContainer(for: FolderModel.self, configurations: config)
+//    
+//    return CardCollectionView(context: ModelContext(container), deck: DeckModel(id: UUID(), name: "Test"))
+//}

@@ -13,10 +13,10 @@ final class DeckModel: Identifiable {
     
     let id: UUID
     var name: String
-    var folder: FolderModel?
+    var folder: FolderModel
     var cards = [CardModel]()
     
-    init(id: UUID, name: String, folder: FolderModel? = nil) {
+    init(id: UUID, name: String, folder: FolderModel) {
         self.id = UUID()
         self.name = name
         self.folder = folder
