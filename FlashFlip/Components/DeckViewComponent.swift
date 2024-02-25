@@ -9,31 +9,37 @@ import SwiftUI
 import SwiftData
 
 struct DeckViewComponent: View {
-
+    
     var context: ModelContext
     let deck: DeckModel
     
     var body: some View {
-        ZStack(alignment: .topLeading) {
-            RoundedRectangle(cornerRadius: 20)
-                .foregroundStyle(Colors.setColor(using: deck.folder.colorName))
-                //.foregroundStyle(Color.red)
-            
-            VStack(alignment: .leading) {
-              
+        ZStack {
+            if !deck.cards.isEmpty {
+                RoundedRectangle(cornerRadius: 20)
+                    .foregroundStyle(Colors.setColor(using: deck.folder!.colorName)).opacity(0.6)
+                    .frame(width: 300, height: 100)
+                    .offset(x: 7.0, y: 7.0)
+            }
+                
+            ZStack(alignment: .topLeading) {
+                RoundedRectangle(cornerRadius: 20)
+                .foregroundStyle(Colors.setColor(using: deck.folder!.colorName))
+                
+                VStack(alignment: .leading) {
                     Text(deck.name)
                         .font(.largeTitle)
                         .fontWeight(.heavy)
-                        
-
-                Spacer()
-                
-            Text("Number of cards: \(deck.cards.count)")
-                
+                    
+                    Spacer()
+                    
+                    Text("Number of cards: \(deck.cards.count)")
+                    
+                }
+                .padding()
             }
-            .padding()
+            .frame(width: 300, height: 80)
         }
-        .frame(width: 300, height: 80)
         .padding(.vertical, 10)
     }
 }
