@@ -32,7 +32,8 @@ struct Icons {
         "alarm.waves.left.and.right.fill",
         "airplane",
         "sparkle",
-        "infinity"
+        "infinity",
+        "folder"
     ]
     
 }

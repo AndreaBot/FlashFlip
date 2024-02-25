@@ -39,7 +39,7 @@ struct Colors {
         case "brown": return .brown
         case "gray": return .gray
         default:
-            return .primary
+            return .gray
         }
     }
 }

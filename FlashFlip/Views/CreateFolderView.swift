@@ -19,7 +19,7 @@ struct CreateFolderView: View {
     ]
     
     @State private var folderName = ""
-    @State private var folderIconName = ""
+    @State private var folderIconName: String?
     @State private var folderColorName = ""
     @FocusState private var txtFieldFocused: Bool
     
@@ -58,8 +58,14 @@ struct CreateFolderView: View {
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Done") {
-                        let newFolder = FolderModel(id: UUID(), name: folderName, iconName: folderIconName, colorName: folderColorName)
+                        let newFolder = FolderModel(id: UUID(), name: folderName, iconName: folderIconName ?? "folder", colorName: folderColorName)
                         context.insert(newFolder)
+                        dismiss()
+                    }
+                    .disabled(folderName == "" ? true : false)
+                }
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") {
                         dismiss()
                     }
                 }
