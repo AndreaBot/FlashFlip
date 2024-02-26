@@ -62,7 +62,7 @@ struct CreateFolderView: View {
                         context.insert(newFolder)
                         dismiss()
                     }
-                    .disabled(folderName == "" ? true : false)
+                    .disabled(folderName.isEmpty)
                 }
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") {

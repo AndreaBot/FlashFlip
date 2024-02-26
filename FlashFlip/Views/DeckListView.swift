@@ -59,33 +59,39 @@ struct DeckListView: View {
                 }
             }
             .alert("Create New Deck", isPresented: $showingPopUp) {
-                TextField("New Deck name", text: $deckName)
+                TextField("New Deck Name", text: $deckName)
                     .onSubmit {
                         createNewDeck()
                     }
-                Button("Confirm") {
-                        createNewDeck()
-                }
-                .disabled(deckName != "" ? false : true)
                 
+                Button("Confirm") {
+                    createNewDeck()
+                }
+                  
                 Button("Cancel") {
                     showingPopUp = false
+                    deckName = ""
                 }
             }
         }
     }
     
     func createNewDeck() {
-        guard deckName != "" else { return }
+        guard !deckName.isEmpty else {
+            showingPopUp = false
+            return
+        }
         
         let newDeck = DeckModel(id: UUID(), name: deckName, folder: folder)
         folder.decks.append(newDeck)
+        
         do {
             try context.save()
+            deckName = ""
         } catch {
             print(error.localizedDescription)
         }
-        deckName = ""
+        showingPopUp = false
     }
     
     func deleteDeck(_ deck: DeckModel) {

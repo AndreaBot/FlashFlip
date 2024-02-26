@@ -20,7 +20,6 @@ struct CardCollectionView: View {
                     Text(card.question)
                 }
             }
-            
             .navigationTitle(deck.name)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
