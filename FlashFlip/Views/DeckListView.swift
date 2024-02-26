@@ -13,7 +13,7 @@ struct DeckListView: View {
     var context: ModelContext
     var folder: FolderModel
     
-    @State private var deckname = ""
+    @State private var deckName = ""
     @State private var showingPopUp = false
     
     var columns = [
@@ -54,13 +54,15 @@ struct DeckListView: View {
                 }
             }
             .alert("Create New Deck", isPresented: $showingPopUp) {
-                TextField("New Deck name", text: $deckname)
+                TextField("New Deck name", text: $deckName)
                     .onSubmit {
                         createNewDeck()
                     }
                 Button("Confirm") {
-                    createNewDeck()
+                        createNewDeck()
                 }
+                .disabled(deckName != "" ? false : true)
+                
                 Button("Cancel") {
                     showingPopUp = false
                 }
@@ -69,14 +71,16 @@ struct DeckListView: View {
     }
     
     func createNewDeck() {
-        let newDeck = DeckModel(id: UUID(), name: deckname, folder: folder)
+        guard deckName != "" else { return }
+        
+        let newDeck = DeckModel(id: UUID(), name: deckName, folder: folder)
         folder.decks.append(newDeck)
         do {
             try context.save()
         } catch {
             print(error.localizedDescription)
         }
-        deckname = ""
+        deckName = ""
     }
 }
 
