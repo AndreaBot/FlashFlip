@@ -14,31 +14,31 @@ struct FolderViewComponent: View {
     let folder: FolderModel
     
     var body: some View {
-        ZStack(alignment: .topLeading) {
-            RoundedRectangle(cornerRadius: 20)
-                .foregroundStyle(Colors.setColor(using: folder.colorName))
-            
-            VStack(alignment: .leading) {
-                HStack {
-                    Text(folder.name)
-                        .font(.largeTitle)
-                        .fontWeight(.heavy)
-                        
-                    Spacer()
-                    
-                    Image(systemName: folder.iconName)
-                        .resizable()
-                        .scaledToFit()
-                }
+        VStack(alignment: .leading) {
+            HStack(alignment: .top) {
+                Text(folder.name)
+                    .font(.largeTitle)
+                    .fontWeight(.heavy)
                 
                 Spacer()
                 
-                Text("Number of decks: \(folder.decks.count)")
-                
+                Image(systemName: folder.iconName)
+                    .resizable()
+                    .scaledToFit()
             }
-            .padding()
+            
+            Spacer()
+            
+            Text("Number of decks: \(folder.decks.count)")
+            
         }
-        .frame(width: 300, height: 150)
+        .padding()
+        .frame(height: 150)
+        .containerRelativeFrame(.horizontal) { size, axis in
+            size * 0.9
+        }
+        .background(Colors.setColor(using: folder.colorName))
+        .clipShape(RoundedRectangle(cornerRadius: 20))
     }
 }
 

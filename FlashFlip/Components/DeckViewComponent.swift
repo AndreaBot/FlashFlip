@@ -17,15 +17,23 @@ struct DeckViewComponent: View {
         ZStack {
             if !deck.cards.isEmpty {
                 RoundedRectangle(cornerRadius: 20)
-                    .foregroundStyle(Colors.setColor(using: deck.folder!.colorName)).opacity(0.6)
-                    .frame(width: 300, height: 100)
-                    .offset(x: 7.0, y: 7.0)
-            }
+                    .frame(height: 80)
+                    .containerRelativeFrame(.horizontal) { size, axis in
+                        size * 0.8
+                    }
+                    .foregroundStyle(Colors.setColor(using: deck.folder!.colorName)).opacity(0.55)
+                    .offset(x: 0.0, y: 18.0)
                 
-            ZStack(alignment: .topLeading) {
                 RoundedRectangle(cornerRadius: 20)
-                .foregroundStyle(Colors.setColor(using: deck.folder!.colorName))
-                
+                    .frame(height: 80)
+                    .containerRelativeFrame(.horizontal) { size, axis in
+                        size * 0.85
+                    }
+                    .foregroundStyle(Colors.setColor(using: deck.folder!.colorName)).opacity(0.65)
+                    .offset(x: 0.0, y: 14.0)
+            }
+            
+            HStack {
                 VStack(alignment: .leading) {
                     Text(deck.name)
                         .font(.largeTitle)
@@ -34,13 +42,26 @@ struct DeckViewComponent: View {
                     Spacer()
                     
                     Text("Number of cards: \(deck.cards.count)")
-                    
                 }
                 .padding()
+                
+                Spacer()
             }
-            .frame(width: 300, height: 80)
+            .frame(height: 80)
+            .containerRelativeFrame(.horizontal) { size, axis in
+                size * 0.9
+            }
+            .frame(height: 80)
+            .containerRelativeFrame(.horizontal) { size, axis in
+                size * 0.9
+            }
+            .padding(.vertical, 10)
+            .background(Colors.setColor(using: deck.folder!.colorName))
+            .clipShape(RoundedRectangle(cornerRadius: 20))
         }
-        .padding(.vertical, 10)
+        .containerRelativeFrame(.horizontal) { size, axis in
+            size * 0.9
+        }
     }
 }
 
