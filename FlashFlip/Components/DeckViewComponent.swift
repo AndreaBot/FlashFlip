@@ -48,19 +48,12 @@ struct DeckViewComponent: View {
                 Spacer()
             }
             .frame(height: 80)
-            .containerRelativeFrame(.horizontal) { size, axis in
-                size * 0.9
-            }
-            .frame(height: 80)
-            .containerRelativeFrame(.horizontal) { size, axis in
-                size * 0.9
-            }
             .padding(.vertical, 10)
+            .containerRelativeFrame(.horizontal) { size, axis in
+                size * 0.9
+            }
             .background(Colors.setColor(using: deck.folder!.colorName))
             .clipShape(RoundedRectangle(cornerRadius: 20))
-        }
-        .containerRelativeFrame(.horizontal) { size, axis in
-            size * 0.9
         }
     }
 }

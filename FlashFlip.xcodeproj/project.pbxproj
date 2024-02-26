@@ -24,6 +24,7 @@
 		62003EA22B8A3A7000F888AE /* CardCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62003EA12B8A3A7000F888AE /* CardCollectionView.swift */; };
 		62003EA42B8A3E9100F888AE /* CardViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62003EA32B8A3E9100F888AE /* CardViewComponent.swift */; };
 		62003EA62B8B8B9C00F888AE /* DeckViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62003EA52B8B8B9C00F888AE /* DeckViewComponent.swift */; };
+		62003EA82B8CF5F400F888AE /* CreateElementComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62003EA72B8CF5F400F888AE /* CreateElementComponent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 		62003EA12B8A3A7000F888AE /* CardCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionView.swift; sourceTree = "<group>"; };
 		62003EA32B8A3E9100F888AE /* CardViewComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewComponent.swift; sourceTree = "<group>"; };
 		62003EA52B8B8B9C00F888AE /* DeckViewComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckViewComponent.swift; sourceTree = "<group>"; };
+		62003EA72B8CF5F400F888AE /* CreateElementComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateElementComponent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,7 @@
 				62003E952B89FCFE00F888AE /* IconGridViewComponent.swift */,
 				62003E992B8A018200F888AE /* ColorsGridItemViewComponent.swift */,
 				62003E872B89F09000F888AE /* FolderViewComponent.swift */,
+				62003EA72B8CF5F400F888AE /* CreateElementComponent.swift */,
 				62003EA52B8B8B9C00F888AE /* DeckViewComponent.swift */,
 				62003EA32B8A3E9100F888AE /* CardViewComponent.swift */,
 			);
@@ -211,6 +214,7 @@
 				62003E942B89FB0B00F888AE /* Icons.swift in Sources */,
 				62003EA22B8A3A7000F888AE /* CardCollectionView.swift in Sources */,
 				62003E8D2B89F4E300F888AE /* DeckModel.swift in Sources */,
+				62003EA82B8CF5F400F888AE /* CreateElementComponent.swift in Sources */,
 				62003EA62B8B8B9C00F888AE /* DeckViewComponent.swift in Sources */,
 				62003E882B89F09000F888AE /* FolderViewComponent.swift in Sources */,
 				62003E772B89ED8000F888AE /* FlashFlipApp.swift in Sources */,

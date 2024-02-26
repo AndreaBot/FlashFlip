@@ -34,6 +34,15 @@ struct HomeView: View {
                 .listRowSeparator(.hidden)
                 .listRowBackground(Color.clear)
                 
+                Button {
+                    showingNewFolderView = true
+                } label: {
+                    CreateElementComponent(height: 150)
+                }
+                .buttonStyle(.plain)
+                .listRowSeparator(.hidden)
+                .listRowBackground(Color.clear)
+                
             }
             .navigationTitle("Flash Flip")
             .toolbar {

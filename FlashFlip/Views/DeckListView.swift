@@ -32,6 +32,15 @@ struct DeckListView: View {
                 }
                 .listRowSeparator(.hidden)
                 .listRowBackground(Color.clear)
+                
+                Button {
+                    showingPopUp = true
+                } label: {
+                    CreateElementComponent(height: 95)
+                }
+                .buttonStyle(.plain)
+                .listRowSeparator(.hidden)
+                .listRowBackground(Color.clear)
             }
             .navigationTitle(folder.name)
             .toolbar {
