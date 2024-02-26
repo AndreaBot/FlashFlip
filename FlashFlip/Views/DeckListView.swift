@@ -30,6 +30,11 @@ struct DeckListView: View {
                         DeckViewComponent(context: context, deck: deck)
                     }
                 }
+                .onDelete(perform: { indexSet in
+                    for index in indexSet {
+                        deleteDeck(folder.decks[index])
+                    }
+                })
                 .listRowSeparator(.hidden)
                 .listRowBackground(Color.clear)
                 
@@ -81,6 +86,10 @@ struct DeckListView: View {
             print(error.localizedDescription)
         }
         deckName = ""
+    }
+    
+    func deleteDeck(_ deck: DeckModel) {
+        context.delete(deck)
     }
 }
 
