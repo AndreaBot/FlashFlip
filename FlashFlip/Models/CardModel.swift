@@ -19,7 +19,6 @@ final class CardModel: Identifiable {
         self.id = UUID()
         self.question = question
         self.answer = answer
-     
     }
 
 }
