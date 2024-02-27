@@ -41,38 +41,11 @@ struct CardCollectionView: View {
                     }
                 }
             }
-            .alert("Create a New Card", isPresented: $showCardCreation) {
-                
-                TextField("Card Question", text: $cardQuestion)
-                TextField("Card Answer", text: $cardAnswer)
-                
-                Button("Confirm") {
-                    createnewCard()
-                }
-                
-                Button("Cancel") {
-                    showCardCreation = false
-                }
+            .sheet(isPresented: $showCardCreation) {
+                CardCreationView(deck: deck, context: context, cardQuestion: $cardQuestion, cardAnswer: $cardAnswer, showCardCreation: $showCardCreation)
+                    .presentationDetents([.fraction(0.34)])
             }
         }
-    }
-    
-    func createnewCard() {
-        guard !cardQuestion.isEmpty && !cardAnswer.isEmpty else {
-            cardQuestion = ""
-            cardAnswer = ""
-            return
-        }
-        
-        let newCard = CardModel(id: UUID(), question: cardQuestion, answer: cardAnswer)
-        deck.cards.append(newCard)
-        do {
-            try context.save()
-        } catch {
-            print(error.localizedDescription)
-        }
-        cardQuestion = ""
-        cardAnswer = ""
     }
 }
 
