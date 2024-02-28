@@ -15,7 +15,7 @@ struct CardViewComponent: View {
     
     var body: some View {
         ZStack(alignment: .topLeading) {
-            RoundedRectangle(cornerRadius: 20)
+            RoundedRectangle(cornerRadius: 15)
                 .foregroundStyle(Colors.setColor(using: deck.folder!.colorName))
             
             VStack(alignment: .leading) {
@@ -27,17 +27,16 @@ struct CardViewComponent: View {
                 Text(card.answer)
                         .font(.title3)
                         .fontWeight(.medium)
-
             }
             .padding()
         }
-        .frame(width: 200, height: 100)
+        .containerRelativeFrame(.horizontal, count: 5, span: 2, spacing: 10)
     }
 }
 
-//#Preview {
-//    let config = ModelConfiguration(isStoredInMemoryOnly: true)
-//    let container = try! ModelContainer(for: FolderModel.self, configurations: config)
-//    
-//    return CardViewComponent(card: CardModel(id: UUID(), question: "aa", answer: "bb"), deck: DeckModel(id: UUID(), name: "cc"))
-//}
+#Preview {
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: FolderModel.self, configurations: config)
+
+    return CardViewComponent(card: CardModel(id: UUID(), question: "aa", answer: "bb"), deck: DeckModel(id: UUID(), name: "cc"))
+}

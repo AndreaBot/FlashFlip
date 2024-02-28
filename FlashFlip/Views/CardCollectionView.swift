@@ -19,31 +19,32 @@ struct CardCollectionView: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
-                ScrollView(.horizontal) {
-                    HStack {
-                        ForEach(deck.cards) { card in
-                            CardViewComponent(card: card, deck: deck)
+            GeometryReader { metrics in
+                VStack {
+                    ScrollView(.horizontal) {
+                        HStack {
+                            ForEach(deck.cards) { card in
+                                CardViewComponent(card: card, deck: deck)
+                            }
+                        }
+                        .frame(height: metrics.size.height * 0.33)
+                    }
+                }
+                .navigationTitle(deck.name)
+                .toolbar {
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button {
+                            showCardCreation = true
+                        } label: {
+                            Image(systemName: "plus")
+                                .fontWeight(.semibold)
                         }
                     }
                 }
-                
-                Spacer()
-            }
-            .navigationTitle(deck.name)
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button {
-                        showCardCreation = true
-                    } label: {
-                        Image(systemName: "plus")
-                            .fontWeight(.semibold)
-                    }
+                .sheet(isPresented: $showCardCreation) {
+                    CardCreationView(deck: deck, context: context, cardQuestion: $cardQuestion, cardAnswer: $cardAnswer, showCardCreation: $showCardCreation)
+                        .presentationDetents([.fraction(0.34)])
                 }
-            }
-            .sheet(isPresented: $showCardCreation) {
-                CardCreationView(deck: deck, context: context, cardQuestion: $cardQuestion, cardAnswer: $cardAnswer, showCardCreation: $showCardCreation)
-                    .presentationDetents([.fraction(0.34)])
             }
         }
     }
