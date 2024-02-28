@@ -29,6 +29,14 @@ struct CardCollectionView: View {
                         }
                         .frame(height: metrics.size.height * 0.33)
                     }
+                    
+                    Spacer()
+                    
+                    Button("Browse Cards") {
+                        
+                    }
+                    
+                    Spacer()
                 }
                 .navigationTitle(deck.name)
                 .toolbar {

@@ -11,7 +11,7 @@ import SwiftData
 struct CardCreationView: View {
     
     @Bindable var deck: DeckModel
-     var context: ModelContext
+    var context: ModelContext
     
     @Binding var cardQuestion: String
     @Binding var cardAnswer: String
@@ -20,22 +20,10 @@ struct CardCreationView: View {
     @FocusState var txtIsFocused: Bool
     
     var body: some View {
-        ZStack {
-            Color.secondary
-                .ignoresSafeArea()
-            
-            VStack {
-                HStack {
-                    Spacer()
-                    Button {
-                        showCardCreation = false
-                    } label: {
-                        Text("Done")
-                            .fontWeight(.semibold)
-                    }
-                }
-                
-                Spacer()
+        NavigationStack {
+            ZStack {
+                Color.secondary
+                    .ignoresSafeArea()
                 
                 VStack {
                     TextField("Card Question", text: $cardQuestion)
@@ -43,29 +31,37 @@ struct CardCreationView: View {
                         .padding()
                         .background(.background)
                         .clipShape(Capsule())
+                        .multilineTextAlignment(.center)
                     
                     TextField("Card Answer", text: $cardAnswer)
                         .padding()
                         .background(.background)
                         .clipShape(Capsule())
+                        .multilineTextAlignment(.center)
+                    
+                    Spacer()
+                    
+                    Button {
+                        createnewCard()
+                    } label: {
+                        Text("Create card")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.borderedProminent)
                 }
-                .multilineTextAlignment(.center)
-                
-                Spacer()
-                
-                Button {
-                    createnewCard()
-                } label: {
-                    Text("Create card")
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
+                .padding()
             }
-            .padding()
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Done") {
+                        showCardCreation = false
+                    }
+                }
+            }
+            .onAppear(perform: {
+                txtIsFocused = true
+            })
         }
-        .onAppear(perform: {
-            txtIsFocused = true
-        })
     }
     
     func createnewCard() {
