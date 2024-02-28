@@ -26,6 +26,7 @@
 		62003EA62B8B8B9C00F888AE /* DeckViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62003EA52B8B8B9C00F888AE /* DeckViewComponent.swift */; };
 		62003EA82B8CF5F400F888AE /* CreateElementComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62003EA72B8CF5F400F888AE /* CreateElementComponent.swift */; };
 		6281D1092B8E83FA00E097C0 /* CardCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6281D1082B8E83FA00E097C0 /* CardCreationView.swift */; };
+		628E7C662B8FD86F009AEF9A /* CardsCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628E7C652B8FD86F009AEF9A /* CardsCarouselView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +50,7 @@
 		62003EA52B8B8B9C00F888AE /* DeckViewComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckViewComponent.swift; sourceTree = "<group>"; };
 		62003EA72B8CF5F400F888AE /* CreateElementComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateElementComponent.swift; sourceTree = "<group>"; };
 		6281D1082B8E83FA00E097C0 /* CardCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCreationView.swift; sourceTree = "<group>"; };
+		628E7C652B8FD86F009AEF9A /* CardsCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsCarouselView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +120,7 @@
 				62003E902B89FA9A00F888AE /* CreateFolderView.swift */,
 				62003E9B2B8A13A900F888AE /* DeckListView.swift */,
 				62003EA12B8A3A7000F888AE /* CardCollectionView.swift */,
+				628E7C652B8FD86F009AEF9A /* CardsCarouselView.swift */,
 				6281D1082B8E83FA00E097C0 /* CardCreationView.swift */,
 			);
 			path = Views;
@@ -206,6 +209,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				628E7C662B8FD86F009AEF9A /* CardsCarouselView.swift in Sources */,
 				62003E792B89ED8000F888AE /* HomeView.swift in Sources */,
 				62003E9C2B8A13A900F888AE /* DeckListView.swift in Sources */,
 				62003E8B2B89F1A800F888AE /* Colors.swift in Sources */,

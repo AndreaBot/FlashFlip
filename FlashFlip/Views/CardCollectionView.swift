@@ -32,8 +32,8 @@ struct CardCollectionView: View {
                     
                     Spacer()
                     
-                    Button("Browse Cards") {
-                        
+                    NavigationLink("Browse Cards") {
+                        CardsCarouselView(deck: deck)
                     }
                     
                     Spacer()

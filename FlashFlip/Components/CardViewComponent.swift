@@ -14,19 +14,20 @@ struct CardViewComponent: View {
     let deck: DeckModel
     
     var body: some View {
+        
         ZStack(alignment: .topLeading) {
             RoundedRectangle(cornerRadius: 15)
                 .foregroundStyle(Colors.setColor(using: deck.folder!.colorName))
             
             VStack(alignment: .leading) {
                 Text(card.question)
-                        .font(.title)
-                        .fontWeight(.bold)
-                    
-                    Spacer()
+                    .font(.title)
+                    .fontWeight(.bold)
+                
+                Spacer()
                 Text(card.answer)
-                        .font(.title3)
-                        .fontWeight(.medium)
+                    .font(.title3)
+                    .fontWeight(.medium)
             }
             .padding()
         }
