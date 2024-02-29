@@ -12,9 +12,9 @@ import SwiftData
 final class FolderModel: Identifiable {
     
     let id: UUID
-    let name: String
-    let iconName: String
-    let colorName: String
+    var name: String
+    var iconName: String?
+    var colorName: String
     var decks = [DeckModel]()
     
     init(id: UUID, name: String, iconName: String, colorName: String) {

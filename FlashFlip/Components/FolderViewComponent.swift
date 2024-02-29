@@ -22,7 +22,7 @@ struct FolderViewComponent: View {
                 
                 Spacer()
                 
-                Image(systemName: folder.iconName)
+                Image(systemName: folder.iconName!)
                     .resizable()
                     .scaledToFit()
             }

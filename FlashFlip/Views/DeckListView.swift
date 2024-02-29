@@ -11,10 +11,11 @@ import SwiftData
 struct DeckListView: View {
     
     var context: ModelContext
-    var folder: FolderModel
+    @State var folder: FolderModel
     
     @State private var deckName = ""
     @State private var showingPopUp = false
+    @State private var showFolderEditing = false
     
     var columns = [
         GridItem(.adaptive(minimum: UIScreen.main.bounds.width/3))
@@ -57,6 +58,14 @@ struct DeckListView: View {
                             .fontWeight(.semibold)
                     }
                 }
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        showFolderEditing = true
+                    } label: {
+                        Image(systemName: "pencil")
+                            .fontWeight(.semibold)
+                    }
+                }
             }
             .alert("Create New Deck", isPresented: $showingPopUp) {
                 TextField("New Deck Name", text: $deckName)
@@ -72,6 +81,9 @@ struct DeckListView: View {
                     showingPopUp = false
                     deckName = ""
                 }
+            }
+            .sheet(isPresented: $showFolderEditing) {
+                CreateFolderView(context: context, folderName: $folder.name, folderIconName: $folder.iconName, folderColorName: $folder.colorName, folderIsBeingModified: true)
             }
         }
     }

@@ -14,6 +14,9 @@ struct HomeView: View {
     @Query var allFolders: [FolderModel]
     
     @State private var showingNewFolderView = false
+    @State private var foldername = ""
+    @State private var folderIconName: String?
+    @State private var folderColorname = ""
     
     var body: some View {
         NavigationStack {
@@ -57,7 +60,7 @@ struct HomeView: View {
             }
         }
         .sheet(isPresented: $showingNewFolderView, content: {
-            CreateFolderView(context: context)
+            CreateFolderView(context: context, folderName: $foldername, folderIconName: $folderIconName, folderColorName: $folderColorname, folderIsBeingModified: false)
         })
     }
     

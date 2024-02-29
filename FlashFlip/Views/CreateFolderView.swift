@@ -18,16 +18,19 @@ struct CreateFolderView: View {
         GridItem(.adaptive(minimum: UIScreen.main.bounds.width/6))
     ]
     
-    @State private var folderName = ""
-    @State private var folderIconName: String?
-    @State private var folderColorName = ""
+    @Binding  var folderName: String
+    @Binding  var folderIconName: String?
+    @Binding  var folderColorName: String
     @FocusState private var txtFieldFocused: Bool
+    
+    let folderIsBeingModified: Bool
+    @State private var originalFolderName = ""
     
     var body: some View {
         NavigationStack {
             Form {
                 Section {
-                    TextField("Type the folder name", text: $folderName)
+                    TextField("Type the folder name", text: $folderName )
                         .focused($txtFieldFocused)
                         .padding(.vertical, 8)
                 }
@@ -54,23 +57,36 @@ struct CreateFolderView: View {
                     }
                 }
             }
-            .navigationTitle("Create New Folder")
+            .navigationTitle(folderIsBeingModified ? "Edit Folder" : "Create New Folder")
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Done") {
-                        let newFolder = FolderModel(id: UUID(), name: folderName, iconName: folderIconName ?? "folder", colorName: folderColorName)
-                        context.insert(newFolder)
-                        dismiss()
+                        folderIsBeingModified ? dismiss() : createFolder()
                     }
                     .disabled(folderName.isEmpty)
                 }
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") {
+                        folderName = originalFolderName
                         dismiss()
                     }
                 }
             }
+            .onAppear {
+                if folderIsBeingModified {
+                    originalFolderName = folderName
+                }
+            }
         }
+    }
+    
+    func createFolder() {
+        let newFolder = FolderModel(id: UUID(), name: folderName, iconName: folderIconName ?? "folder", colorName: folderColorName)
+        context.insert(newFolder)
+        folderName = ""
+        folderIconName = ""
+        folderColorName = ""
+        dismiss()
     }
 }
 
@@ -78,6 +94,6 @@ struct CreateFolderView: View {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
     let container = try! ModelContainer(for: FolderModel.self, configurations: config)
     
-    return CreateFolderView(context: ModelContext(container))
+    return CreateFolderView(context: ModelContext(container), folderName: .constant("Folder Name"), folderIconName: .constant("heart.fill"), folderColorName: .constant("red"), folderIsBeingModified: false)
 }
 
