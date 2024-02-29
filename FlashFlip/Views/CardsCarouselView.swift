@@ -21,7 +21,7 @@ struct CardsCarouselView: View {
             GeometryReader { metrics in
                 VStack {
                     ZStack {
-                        ForEach(0..<deck.cards.count) { index in
+                        ForEach(0..<deck.cards.count, id: \.self) { index in
                             
                             let widthMod = CGFloat(index - currentIndex) * metrics.size.width
                             
@@ -46,7 +46,7 @@ struct CardsCarouselView: View {
                         }
                         
                         Button(role: .destructive) {
-                            
+                            deck.cards.remove(at: currentIndex)
                         } label: {
                             Text("Delete Card")
                                 .padding(.horizontal)

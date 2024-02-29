@@ -35,6 +35,7 @@ struct CardCollectionView: View {
                     NavigationLink("Browse Cards") {
                         CardsCarouselView(deck: deck, context: context)
                     }
+                    .disabled(deck.cards.isEmpty ? true : false)
                     
                     Spacer()
                 }
