@@ -12,8 +12,8 @@ import SwiftData
 final class CardModel: Identifiable {
     
     let id: UUID
-    let question: String
-    let answer: String
+    var question: String
+    var answer: String
     
     init(id: UUID, question: String, answer: String) {
         self.id = UUID()

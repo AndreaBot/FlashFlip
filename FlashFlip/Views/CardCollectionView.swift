@@ -33,7 +33,7 @@ struct CardCollectionView: View {
                     Spacer()
                     
                     NavigationLink("Browse Cards") {
-                        CardsCarouselView(deck: deck)
+                        CardsCarouselView(deck: deck, context: context)
                     }
                     
                     Spacer()
@@ -50,7 +50,7 @@ struct CardCollectionView: View {
                     }
                 }
                 .sheet(isPresented: $showCardCreation) {
-                    CardCreationView(deck: deck, context: context, cardQuestion: $cardQuestion, cardAnswer: $cardAnswer, showCardCreation: $showCardCreation)
+                    CardCreationView(deck: deck, context: context, cardQuestion: $cardQuestion, cardAnswer: $cardAnswer, showCardCreation: $showCardCreation, cardIsBeingModified: false)
                         .presentationDetents([.fraction(0.34)])
                 }
             }

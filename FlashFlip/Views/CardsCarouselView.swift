@@ -6,13 +6,15 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct CardsCarouselView: View {
     
-    var deck: DeckModel
+    @State var deck: DeckModel
+    var context: ModelContext
     @State private var currentIndex: Int = 0
     @GestureState private var dragOffset: CGFloat = 0
-    
+    @State private var showingCardEditing = false
     
     var body: some View {
         NavigationStack {
@@ -36,7 +38,7 @@ struct CardsCarouselView: View {
                     
                     VStack(spacing: 20) {
                         Button {
-                            
+                            showingCardEditing = true
                         } label: {
                             Text("Edit Card")
                                 .padding(.horizontal)
@@ -69,6 +71,10 @@ struct CardsCarouselView: View {
                         })
                 )
                 .navigationTitle("\(deck.name)")
+                .sheet(isPresented: $showingCardEditing, content: {
+                    CardCreationView(deck: deck, context: context, cardQuestion: $deck.cards[currentIndex].question, cardAnswer: $deck.cards[currentIndex].answer, showCardCreation: $showingCardEditing, cardIsBeingModified: true)
+                        .presentationDetents([.fraction(0.34)])
+                })
             }
         }
     }

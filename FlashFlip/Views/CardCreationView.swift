@@ -19,6 +19,8 @@ struct CardCreationView: View {
     
     @FocusState var txtIsFocused: Bool
     
+    let cardIsBeingModified: Bool
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -42,9 +44,9 @@ struct CardCreationView: View {
                     Spacer()
                     
                     Button {
-                        createnewCard()
+                        cardIsBeingModified ? showCardCreation.toggle() : createnewCard()
                     } label: {
-                        Text("Create card")
+                        Text(cardIsBeingModified ? "Confirm Changes" : "Create card")
                             .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.borderedProminent)
@@ -78,6 +80,7 @@ struct CardCreationView: View {
         }
         cardQuestion = ""
         cardAnswer = ""
+        txtIsFocused = true
     }
 }
 
