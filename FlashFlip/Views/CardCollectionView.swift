@@ -11,11 +11,13 @@ import SwiftData
 struct CardCollectionView: View {
     
     var context: ModelContext
-    var deck: DeckModel
+    @State var deck: DeckModel
+    @State private var newDeckName = ""
     
     @State private var cardQuestion = ""
     @State private var cardAnswer = ""
     @State private var showCardCreation = false
+    @State private var showDeckNameEditing = false
     
     var body: some View {
         NavigationStack {
@@ -49,13 +51,47 @@ struct CardCollectionView: View {
                                 .fontWeight(.semibold)
                         }
                     }
+                    ToolbarItem(placement: .primaryAction) {
+                        Button {
+                            showDeckNameEditing = true
+                        } label: {
+                            Image(systemName: "pencil")
+                                .fontWeight(.semibold)
+                        }
+                    }
                 }
                 .sheet(isPresented: $showCardCreation) {
                     CardCreationView(deck: deck, context: context, cardQuestion: $cardQuestion, cardAnswer: $cardAnswer, showCardCreation: $showCardCreation, cardIsBeingModified: false)
                         .presentationDetents([.fraction(0.34)])
                 }
+                .alert("Edit Deck name", isPresented: $showDeckNameEditing) {
+                    TextField("Type the new name", text: $newDeckName)
+                        .onSubmit {
+                            updateDeckName()
+                        }
+                    Button("Confirm") {
+                        updateDeckName()
+                    }
+                    
+                    Button("Cancel") {
+                        showDeckNameEditing = false
+                    }
+                }
+                .onAppear {
+                    newDeckName = deck.name
+                }
             }
         }
+    }
+    
+    func updateDeckName() {
+        guard newDeckName != "" else {
+            newDeckName = deck.name
+            showDeckNameEditing = false
+            return
+        }
+        deck.name = newDeckName
+        showDeckNameEditing = false
     }
 }
 
