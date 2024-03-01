@@ -25,6 +25,8 @@ struct CreateFolderView: View {
     
     let folderIsBeingModified: Bool
     @State private var originalFolderName = ""
+    @State private var originalFolderIcon = ""
+    @State private var originalFolderColor = ""
     
     var body: some View {
         NavigationStack {
@@ -67,14 +69,13 @@ struct CreateFolderView: View {
                 }
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") {
-                        folderName = originalFolderName
-                        dismiss()
+                        undoChages()
                     }
                 }
             }
             .onAppear {
                 if folderIsBeingModified {
-                    originalFolderName = folderName
+                    copyOriginalDetails()
                 }
             }
         }
@@ -87,6 +88,19 @@ struct CreateFolderView: View {
         folderIconName = ""
         folderColorName = ""
         dismiss()
+    }
+    
+    func undoChages() {
+        folderName = originalFolderName
+        folderIconName = originalFolderIcon
+        folderColorName = originalFolderColor
+        dismiss()
+    }
+    
+    func copyOriginalDetails() {
+        originalFolderName = folderName
+        originalFolderIcon = folderIconName!
+        originalFolderColor = folderColorName
     }
 }
 
