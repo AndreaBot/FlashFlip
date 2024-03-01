@@ -11,7 +11,7 @@ import SwiftData
 @Model
 final class FolderModel: Identifiable {
     
-    let id: UUID
+    var id: UUID
     var name: String
     var iconName: String?
     var colorName: String

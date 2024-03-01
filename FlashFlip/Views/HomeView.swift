@@ -14,9 +14,12 @@ struct HomeView: View {
     @Query var allFolders: [FolderModel]
     
     @State private var showingNewFolderView = false
-    @State private var foldername = ""
+    @State private var showFolderEditing = false
+    @State private var folderName = ""
     @State private var folderIconName: String?
     @State private var folderColorname = ""
+    
+    @State private var mockFolder = FolderModel(id: UUID(), name: "", iconName: "", colorName: "")
     
     var body: some View {
         NavigationStack {
@@ -27,13 +30,26 @@ struct HomeView: View {
                     } label: {
                         FolderViewComponent(context: context, folder: folder)
                     }
-                    
-                }
-                .onDelete(perform: { indexSet in
-                    for index in indexSet {
-                        deleteFolder(allFolders[index])
+                    .swipeActions{
+                        Button(role: .destructive) {
+                            deleteFolder(folder)
+                        } label: {
+                            Image(systemName: "trash")
+                        }
+                        
+                        Button() {
+                            if let selectedIndex = allFolders.firstIndex(where: { selectedFolder in
+                                selectedFolder == folder
+                            }) {
+                                mockFolder = allFolders[selectedIndex]
+                                showFolderEditing = true
+                            }
+                        } label: {
+                            Image(systemName: "pencil")
+                        }
+                        .tint(.blue)
                     }
-                })
+                }
                 .listRowSeparator(.hidden)
                 .listRowBackground(Color.clear)
                 
@@ -60,8 +76,11 @@ struct HomeView: View {
             }
         }
         .sheet(isPresented: $showingNewFolderView, content: {
-            CreateFolderView(context: context, folderName: $foldername, folderIconName: $folderIconName, folderColorName: $folderColorname, folderIsBeingModified: false)
+            CreateFolderView(context: context, folderName: $folderName, folderIconName: $folderIconName, folderColorName: $folderColorname, folderIsBeingModified: false)
         })
+        .sheet(isPresented: $showFolderEditing) {
+            CreateFolderView(context: context, folderName: $mockFolder.name, folderIconName: $mockFolder.iconName, folderColorName: $mockFolder.colorName, folderIsBeingModified: true)
+        }
     }
     
     func deleteFolder(_ folder: FolderModel) {

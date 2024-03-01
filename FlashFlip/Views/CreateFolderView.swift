@@ -18,9 +18,10 @@ struct CreateFolderView: View {
         GridItem(.adaptive(minimum: UIScreen.main.bounds.width/6))
     ]
     
-    @Binding  var folderName: String
-    @Binding  var folderIconName: String?
-    @Binding  var folderColorName: String
+    
+    @Binding var folderName: String
+    @Binding var folderIconName: String?
+    @Binding var folderColorName: String
     @FocusState private var txtFieldFocused: Bool
     
     let folderIsBeingModified: Bool
