@@ -66,6 +66,11 @@ struct DeckListView: View {
                             .fontWeight(.semibold)
                     }
                 }
+                ToolbarItem(placement: .principal) {
+                    Image(systemName: folder.iconName!)
+                        .foregroundStyle(Colors.setColor(using: folder.colorName))
+                        .fontWeight(.semibold)
+                }
             }
             .alert("Create New Deck", isPresented: $showingPopUp) {
                 TextField("New Deck Name", text: $deckName)
