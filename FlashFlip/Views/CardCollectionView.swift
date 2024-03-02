@@ -39,6 +39,11 @@ struct CardCollectionView: View {
                     }
                     .disabled(deck.cards.isEmpty ? true : false)
                     
+                    NavigationLink("Start Study Session") {
+                        StudySessionView(deck: deck)
+                    }
+                    .disabled(deck.cards.isEmpty ? true : false)
+                    
                     Spacer()
                 }
                 .navigationTitle(deck.name)
