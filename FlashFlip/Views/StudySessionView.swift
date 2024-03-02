@@ -12,33 +12,21 @@ struct StudySessionView: View {
     let deck: DeckModel
     
     @State private var rotationAmount = 0.0
-    @State private var showingAnswer = false
-    @State private var currentIndex = 0
+    @State private var swipeAmount = 0.0
+    @State private var studyCards = [CardModel]()
+    
     
     var body: some View {
         NavigationStack {
             GeometryReader { metrics in
                 VStack {
                     ZStack {
-                        ForEach(0..<deck.cards.count, id: \.self) { card in
-                            RoundedRectangle(cornerRadius: 20)
-                                .foregroundStyle(Colors.setColor(using: deck.folder!.colorName))
-                                .onTapGesture {
-                                    rotationAmount += 180
-                                    showingAnswer.toggle()
-                                }
-                                .overlay {
-                                    Text(showingAnswer ? deck.cards[currentIndex].answer : deck.cards[currentIndex].question)
-                                        .font(.title).fontWeight(.medium)
-                                        .rotation3DEffect(
-                                            .degrees(-rotationAmount), axis: (x: 0.0, y: 1.0, z: 0.0)
-                                        )
-                                }
-                                .rotation3DEffect(
-                                    .degrees(rotationAmount), axis: (x: 0.0, y: 1.0, z: 0.0)
-                                )
+                        ForEach(0..<studyCards.count, id: \.self) { index in
+                            StudySessionCard(
+                                card: deck.cards[index],
+                                color: index == (studyCards.count - 1) ? Colors.setColor(using: deck.folder!.colorName) : Color.gray
+                            )
                         }
-                        .animation(.smooth(extraBounce: 0.3), value: rotationAmount)
                     }
                     
                     HStack {
@@ -52,7 +40,7 @@ struct StudySessionView: View {
                         }
                         .padding()
                         .foregroundStyle(.background)
-                        .background(showingAnswer ? .green : .gray)
+                        .background(.green)
                         .clipShape(Circle())
                         
                         
@@ -67,29 +55,30 @@ struct StudySessionView: View {
                         
                         .padding()
                         .foregroundStyle(.background)
-                        .background(showingAnswer ? .red : .gray)
+                        .background(.red)
                         .clipShape(Circle())
                         
                         Spacer()
                     }
                     .padding(.vertical)
-                    .disabled(!showingAnswer)
+                    //.disabled(!showingAnswer)
                 }
-                .padding()
-                .navigationTitle("Study Session")
             }
+            .padding()
+            .navigationTitle("Study Session")
+        }
+        .onAppear {
+            studyCards = deck.cards
         }
     }
     
     func progressGame() {
-        if currentIndex + 2 <= deck.cards.count {
-            currentIndex += 1
-            rotationAmount -= 180
-            showingAnswer.toggle()
-        }
+        //swipeAmount += 90
+        rotationAmount -= 180
+        studyCards.removeLast()
     }
 }
 
 //#Preview {
-//    StudySessionView()
+//    StudySessionView(deck: <#DeckModel#>)
 //}
