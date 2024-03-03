@@ -9,24 +9,16 @@ import SwiftUI
 
 struct EndView: View {
     
-    let correctGuesses: Int
-    let totalCards: Int
-//    @Binding var correctArray: [CardModel]
-//    @Binding var wrongArray: [CardModel]
-    
     var correctArray: [CardModel]
     var wrongArray: [CardModel]
     
     var body: some View {
         VStack {
-            
-            Spacer()
-            
             VStack {
                 Text("END OF SESSION")
                     .font(.largeTitle).fontWeight(.bold)
                 
-                Text("You scored \(correctGuesses)/\(totalCards)")
+                Text("You scored \(correctArray.count)/\(correctArray.count + wrongArray.count)")
                     .font(.title)
             }
             
@@ -67,28 +59,26 @@ struct EndView: View {
                     Text("Wrong answers")
                 }
             }
-            .scrollContentBackground(.hidden)
-           
-            VStack(spacing: 20) {
+            .listStyle(PlainListStyle())
+            
+            VStack {
                 Button {
                     //correctArray.removeAll()
                     // wrongArray.removeAll()
                 } label: {
                     Text("Start again")
-                        .font(.title)
+                        .font(.title2)
                         .padding()
                         .background(.blue)
                         .foregroundStyle(.white)
                         .clipShape(RoundedRectangle(cornerRadius: 15))
                 }
                 
-              
-                
                 Button {
                     //dismiss()
                 } label: {
                     Text("Go Back")
-                        .font(.title)
+                        .font(.title2)
                         .padding()
                         .background(.blue)
                         .foregroundStyle(.white)
@@ -97,16 +87,14 @@ struct EndView: View {
             }
         }
         .padding(.vertical)
-        }
+    }
 }
 
 #Preview {
     let correctArray = [CardModel(id: UUID(), question: "a", answer: "aa"),
                         CardModel(id: UUID(), question: "b", answer: "bb")]
     let wrongArray = [CardModel(id: UUID(), question: "1", answer: "11"),
-                        CardModel(id: UUID(), question: "2", answer: "22")]
+                      CardModel(id: UUID(), question: "2", answer: "22")]
     
-//    return EndView(correctGuesses: 5, totalCards: 10, correctArray: .constant(correctArray), wrongArray: .constant(wrongArray))
-    
-    return EndView(correctGuesses: 5, totalCards: 10, correctArray: correctArray, wrongArray: wrongArray)
+    return EndView(correctArray: correctArray, wrongArray: wrongArray)
 }

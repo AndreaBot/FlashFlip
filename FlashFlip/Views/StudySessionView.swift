@@ -13,28 +13,22 @@ struct StudySessionView: View {
     
     @State private var swipeAmount = 0.0
     @State private var studyCards = [CardModel]()
+    @State private var correctArray = [CardModel]()
+    @State private var wrongArray = [CardModel]()
     
     
     var body: some View {
         NavigationStack {
-            GeometryReader { metrics in
-                VStack {
-                    ZStack {
-                        ForEach(0..<studyCards.count, id: \.self) { index in
-                            StudySessionCard(
-                                card: deck.cards[index],
-                                color: index == (studyCards.count - 1) ? Colors.setColor(using: deck.folder!.colorName) : Color.gray, array: $studyCards
-                            )
-                        }
-                    }
-                }
+            if !studyCards.isEmpty {
+                CardsStackView(deck: deck, correctArray: $correctArray, wrongArray: $wrongArray, studyCards: $studyCards)
+            } else {
+                EndView( correctArray: correctArray, wrongArray: wrongArray)
             }
-            .padding()
-            .navigationTitle("Study Session")
         }
         .onAppear {
             studyCards = deck.cards
         }
+        .navigationTitle("Study Session")
     }
 }
 

@@ -17,6 +17,9 @@ struct StudySessionCard: View {
     
     @Binding var array: [CardModel]
     
+    @Binding var correctGuesses: [CardModel]
+    @Binding var wrongGuesses: [CardModel]
+    
     
     var body: some View {
         VStack {
@@ -50,6 +53,7 @@ struct StudySessionCard: View {
                 Spacer()
                 
                 Button {
+                    correctGuesses.append(array.last!)
                     progressGame()
                 } label: {
                     Image(systemName: "checkmark")
@@ -64,6 +68,7 @@ struct StudySessionCard: View {
                 Spacer()
                 
                 Button {
+                    wrongGuesses.append(array.last!)
                     progressGame()
                 } label: {
                     Image(systemName: "multiply")
@@ -90,5 +95,10 @@ struct StudySessionCard: View {
 }
 
 #Preview {
-    StudySessionCard(card: CardModel(id: UUID(), question: "4x4?", answer: "16"), color: .yellow, array: .constant([CardModel]()))
+    let correctArray = [CardModel(id: UUID(), question: "a", answer: "aa"),
+                        CardModel(id: UUID(), question: "b", answer: "bb")]
+    let wrongArray = [CardModel(id: UUID(), question: "1", answer: "11"),
+                        CardModel(id: UUID(), question: "2", answer: "22")]
+    
+    return StudySessionCard(card: CardModel(id: UUID(), question: "4x4?", answer: "16"), color: .yellow, array: .constant([CardModel]()), correctGuesses: .constant(correctArray), wrongGuesses: .constant(wrongArray))
 }
