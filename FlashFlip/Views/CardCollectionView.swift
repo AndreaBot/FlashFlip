@@ -34,17 +34,18 @@ struct CardCollectionView: View {
                     
                     Spacer()
                     
-                    NavigationLink("Browse Cards") {
-                        CardsCarouselView(deck: deck, context: context)
+                    Form {
+                        NavigationLink("Browse Cards") {
+                            CardsCarouselView(deck: deck, context: context)
+                        }
+                        .disabled(deck.cards.isEmpty ? true : false)
+                        
+                        NavigationLink("Start Study Session") {
+                            StudySessionView(deck: deck)
+                        }
+                        .disabled(deck.cards.isEmpty ? true : false)
+                        
                     }
-                    .disabled(deck.cards.isEmpty ? true : false)
-                    
-                    NavigationLink("Start Study Session") {
-                        StudySessionView(deck: deck)
-                    }
-                    .disabled(deck.cards.isEmpty ? true : false)
-                    
-                    Spacer()
                 }
                 .navigationTitle(deck.name)
                 .toolbar {
