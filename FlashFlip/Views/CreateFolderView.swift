@@ -40,7 +40,7 @@ struct CreateFolderView: View {
                 
                 Section("Select an icon") {
                     LazyVGrid(columns: columns) {
-                        ForEach(Icons.allIcons, id: \.self) { icon in
+                        ForEach(Icons.allIcons.sorted(), id: \.self) { icon in
                             IconsGridItemView(iconName: icon, isSelected: icon == folderIconName)
                                 .onTapGesture {
                                     folderIconName = icon
