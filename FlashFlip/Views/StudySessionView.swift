@@ -11,7 +11,6 @@ struct StudySessionView: View {
     
     let deck: DeckModel
     
-    @State private var rotationAmount = 0.0
     @State private var swipeAmount = 0.0
     @State private var studyCards = [CardModel]()
     
@@ -24,44 +23,10 @@ struct StudySessionView: View {
                         ForEach(0..<studyCards.count, id: \.self) { index in
                             StudySessionCard(
                                 card: deck.cards[index],
-                                color: index == (studyCards.count - 1) ? Colors.setColor(using: deck.folder!.colorName) : Color.gray
+                                color: index == (studyCards.count - 1) ? Colors.setColor(using: deck.folder!.colorName) : Color.gray, array: $studyCards
                             )
                         }
                     }
-                    
-                    HStack {
-                        Spacer()
-                        
-                        Button {
-                            progressGame()
-                        } label: {
-                            Image(systemName: "checkmark")
-                                .font(.largeTitle).fontWeight(.bold)
-                        }
-                        .padding()
-                        .foregroundStyle(.background)
-                        .background(.green)
-                        .clipShape(Circle())
-                        
-                        
-                        Spacer()
-                        
-                        Button {
-                            progressGame()
-                        } label: {
-                            Image(systemName: "multiply")
-                                .font(.largeTitle).fontWeight(.bold)
-                        }
-                        
-                        .padding()
-                        .foregroundStyle(.background)
-                        .background(.red)
-                        .clipShape(Circle())
-                        
-                        Spacer()
-                    }
-                    .padding(.vertical)
-                    //.disabled(!showingAnswer)
                 }
             }
             .padding()
@@ -71,14 +36,8 @@ struct StudySessionView: View {
             studyCards = deck.cards
         }
     }
-    
-    func progressGame() {
-        //swipeAmount += 90
-        rotationAmount -= 180
-        studyCards.removeLast()
-    }
 }
 
-//#Preview {
-//    StudySessionView(deck: <#DeckModel#>)
-//}
+#Preview {
+    StudySessionView(deck: DeckModel(id: UUID(), name: "Test"))
+}
