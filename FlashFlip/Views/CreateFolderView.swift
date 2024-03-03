@@ -38,23 +38,23 @@ struct CreateFolderView: View {
                         .padding(.vertical, 8)
                 }
                 
-                Section("Select an icon") {
-                    LazyVGrid(columns: columns) {
-                        ForEach(Icons.allIcons.sorted(), id: \.self) { icon in
-                            IconsGridItemView(iconName: icon, isSelected: icon == folderIconName)
-                                .onTapGesture {
-                                    folderIconName = icon
-                                }
-                        }
-                    }
-                }
-                
                 Section("Select a color") {
                     LazyVGrid(columns: columns) {
                         ForEach(Colors.allColors, id: \.self) { color in
                             ColorsGridItemViewComponent(iconColor: color, isSelected: color == folderColorName)
                                 .onTapGesture {
                                     folderColorName = color
+                                }
+                        }
+                    }
+                }
+                
+                Section("Select an icon") {
+                    LazyVGrid(columns: columns) {
+                        ForEach(Icons.allIcons.sorted(), id: \.self) { icon in
+                            IconsGridItemView(iconName: icon, isSelected: icon == folderIconName)
+                                .onTapGesture {
+                                    folderIconName = icon
                                 }
                         }
                     }
