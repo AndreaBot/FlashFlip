@@ -42,7 +42,7 @@ struct StudySessionCard: View {
                 
             
                 .animation(.smooth(extraBounce: 0.3), value: rotationAmount)
-                .animation(.linear(duration: 1), value: swipeAmount)
+                .animation(.linear(duration: 0.6), value: swipeAmount)
               
             
             
@@ -83,7 +83,7 @@ struct StudySessionCard: View {
     
     func progressGame() {
         swipeAmount += 180
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
             array.removeLast()
         }
     }
