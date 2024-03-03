@@ -26,7 +26,7 @@ struct StudySessionView: View {
             }
         }
         .onAppear {
-            studyCards.append(contentsOf: deck.cards)
+            studyCards.append(contentsOf: deck.cards.shuffled())
         }
         .navigationTitle("Study Session")
     }

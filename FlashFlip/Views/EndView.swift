@@ -16,7 +16,7 @@ struct EndView: View {
     
     @Binding var studyDeck: [CardModel]
     
-    let deck: DeckModel
+    var deck: DeckModel
     
     var body: some View {
         VStack {
@@ -70,9 +70,8 @@ struct EndView: View {
             VStack {
                 Button {
                     correctArray.removeAll()
-                     wrongArray.removeAll()
-                    
-                    studyDeck.append(contentsOf: deck.cards)
+                    wrongArray.removeAll()
+                    studyDeck.append(contentsOf: deck.cards.shuffled())
                 } label: {
                     Text("Start again")
                         .font(.title2)
