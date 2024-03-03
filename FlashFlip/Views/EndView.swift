@@ -9,6 +9,8 @@ import SwiftUI
 
 struct EndView: View {
     
+    @Environment (\.dismiss) var dismiss
+    
     var correctArray: [CardModel]
     var wrongArray: [CardModel]
     
@@ -75,7 +77,7 @@ struct EndView: View {
                 }
                 
                 Button {
-                    //dismiss()
+                    dismiss()
                 } label: {
                     Text("Go Back")
                         .font(.title2)
