@@ -11,17 +11,21 @@ struct EndView: View {
     
     @Environment (\.dismiss) var dismiss
     
-    var correctArray: [CardModel]
-    var wrongArray: [CardModel]
+    @Binding var correctArray: [CardModel]
+    @Binding var wrongArray: [CardModel]
+    
+    @Binding var studyDeck: [CardModel]
+    
+    let deck: DeckModel
     
     var body: some View {
         VStack {
             VStack {
                 Text("END OF SESSION")
-                    .font(.largeTitle).fontWeight(.bold)
+                    .font(.title).fontWeight(.semibold)
                 
                 Text("You scored \(correctArray.count)/\(correctArray.count + wrongArray.count)")
-                    .font(.title)
+                    .font(.title3)
             }
             
             List {
@@ -65,8 +69,10 @@ struct EndView: View {
             
             VStack {
                 Button {
-                    //correctArray.removeAll()
-                    // wrongArray.removeAll()
+                    correctArray.removeAll()
+                     wrongArray.removeAll()
+                    
+                    studyDeck.append(contentsOf: deck.cards)
                 } label: {
                     Text("Start again")
                         .font(.title2)
@@ -92,11 +98,11 @@ struct EndView: View {
     }
 }
 
-#Preview {
-    let correctArray = [CardModel(id: UUID(), question: "a", answer: "aa"),
-                        CardModel(id: UUID(), question: "b", answer: "bb")]
-    let wrongArray = [CardModel(id: UUID(), question: "1", answer: "11"),
-                      CardModel(id: UUID(), question: "2", answer: "22")]
-    
-    return EndView(correctArray: correctArray, wrongArray: wrongArray)
-}
+//#Preview {
+//    let correctArray = [CardModel(id: UUID(), question: "a", answer: "aa"),
+//                        CardModel(id: UUID(), question: "b", answer: "bb")]
+//    let wrongArray = [CardModel(id: UUID(), question: "1", answer: "11"),
+//                      CardModel(id: UUID(), question: "2", answer: "22")]
+//
+//    return EndView(correctArray: correctArray, wrongArray: wrongArray)
+//}

@@ -22,11 +22,11 @@ struct StudySessionView: View {
             if !studyCards.isEmpty {
                 CardsStackView(deck: deck, correctArray: $correctArray, wrongArray: $wrongArray, studyCards: $studyCards)
             } else {
-                EndView( correctArray: correctArray, wrongArray: wrongArray)
+                EndView( correctArray: $correctArray, wrongArray: $wrongArray, studyDeck: $studyCards, deck: deck)
             }
         }
         .onAppear {
-            studyCards = deck.cards
+            studyCards.append(contentsOf: deck.cards)
         }
         .navigationTitle("Study Session")
     }
