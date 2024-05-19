@@ -13,13 +13,9 @@ struct HomeView: View {
     @Environment(\.modelContext) private var context
     @Query var allFolders: [FolderModel]
     
-    @State private var showingNewFolderView = false
-    @State private var showFolderEditing = false
-    @State private var folderName = ""
-    @State private var folderIconName: String?
-    @State private var folderColorname = ""
+    @State private var showingCreateFolderView = false
+    @State private var selectedFolder: FolderModel?
     
-    @State private var mockFolder = FolderModel(id: UUID(), name: "", iconName: "", colorName: "")
     
     var body: some View {
         NavigationStack {
@@ -37,13 +33,8 @@ struct HomeView: View {
                             Image(systemName: "trash")
                         }
                         
-                        Button() {
-                            if let selectedIndex = allFolders.firstIndex(where: { selectedFolder in
-                                selectedFolder == folder
-                            }) {
-                                mockFolder = allFolders[selectedIndex]
-                                showFolderEditing = true
-                            }
+                        Button {
+                            selectedFolder = folder
                         } label: {
                             Image(systemName: "pencil")
                         }
@@ -54,7 +45,7 @@ struct HomeView: View {
                 .listRowBackground(Color.clear)
                 
                 Button {
-                    showingNewFolderView = true
+                    showingCreateFolderView = true
                 } label: {
                     CreateElementComponent(height: 150)
                 }
@@ -67,7 +58,7 @@ struct HomeView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        showingNewFolderView = true
+                        showingCreateFolderView = true
                     } label: {
                         Image(systemName: "plus")
                             .fontWeight(.semibold)
@@ -75,18 +66,17 @@ struct HomeView: View {
                 }
             }
         }
-        .sheet(isPresented: $showingNewFolderView, content: {
-            CreateFolderView(context: context, folderName: $folderName, folderIconName: $folderIconName, folderColorName: $folderColorname, folderIsBeingModified: false)
-        })
-        .sheet(isPresented: $showFolderEditing) {
-            CreateFolderView(context: context, folderName: $mockFolder.name, folderIconName: $mockFolder.iconName, folderColorName: $mockFolder.colorName, folderIsBeingModified: true)
+        .fullScreenCover(isPresented: $showingCreateFolderView){
+            CreateFolderView(context: context, folderIsBeingModified: false)
+        }
+        .fullScreenCover(item: $selectedFolder) { selectedFolder in
+            CreateFolderView(context: context, folder: selectedFolder, folderIsBeingModified: true)
         }
     }
     
     func deleteFolder(_ folder: FolderModel) {
         context.delete(folder)
     }
-    
 }
 
 #Preview {

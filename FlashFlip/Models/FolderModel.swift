@@ -13,7 +13,7 @@ final class FolderModel: Identifiable {
     
     var id: UUID
     var name: String
-    var iconName: String?
+    var iconName: String
     var colorName: String
     var decks = [DeckModel]()
     

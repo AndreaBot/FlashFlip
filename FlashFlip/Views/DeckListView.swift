@@ -10,16 +10,13 @@ import SwiftData
 
 struct DeckListView: View {
     
-    var context: ModelContext
-    @State var folder: FolderModel
-    
     @State private var deckName = ""
     @State private var showingPopUp = false
     @State private var showFolderEditing = false
     
-    var columns = [
-        GridItem(.adaptive(minimum: UIScreen.main.bounds.width/3))
-    ]
+    var context: ModelContext
+    var folder: FolderModel
+    var columns = [GridItem(.adaptive(minimum: UIScreen.main.bounds.width/3))]
     
     var body: some View {
         NavigationStack {
@@ -67,7 +64,7 @@ struct DeckListView: View {
                     }
                 }
                 ToolbarItem(placement: .principal) {
-                    Image(systemName: folder.iconName!)
+                    Image(systemName: folder.iconName)
                         .foregroundStyle(Colors.setColor(using: folder.colorName))
                         .fontWeight(.semibold)
                 }
@@ -88,7 +85,7 @@ struct DeckListView: View {
                 }
             }
             .sheet(isPresented: $showFolderEditing) {
-                CreateFolderView(context: context, folderName: $folder.name, folderIconName: $folder.iconName, folderColorName: $folder.colorName, folderIsBeingModified: true)
+                CreateFolderView(context: context, folder: folder, folderIsBeingModified: true)
             }
         }
     }
@@ -120,5 +117,5 @@ struct DeckListView: View {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
     let container = try! ModelContainer(for: FolderModel.self, configurations: config)
     
-    return DeckListView(context: ModelContext(container), folder: FolderModel(id: UUID(), name: "Test", iconName: "plus", colorName: "blue"))
+    return DeckListView(context: ModelContext(container), folder: FolderModel(id: UUID(), name: "Test", iconName: "brain", colorName: "blue"))
 }

@@ -12,28 +12,23 @@ struct CreateFolderView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    var context: ModelContext
+    @State private var newFolderName = ""
+    @State private var newFolderIconName = "folder"
+    @State private var newFolderColorName = ""
     
-    var columns = [
-        GridItem(.adaptive(minimum: UIScreen.main.bounds.width/6))
-    ]
-    
-    
-    @Binding var folderName: String
-    @Binding var folderIconName: String?
-    @Binding var folderColorName: String
     @FocusState private var txtFieldFocused: Bool
     
+    var context: ModelContext
+    var folder: FolderModel?
     let folderIsBeingModified: Bool
-    @State private var originalFolderName = ""
-    @State private var originalFolderIcon = ""
-    @State private var originalFolderColor = ""
+    var columns = [GridItem(.adaptive(minimum: UIScreen.main.bounds.width/6))]
+    
     
     var body: some View {
         NavigationStack {
             Form {
                 Section {
-                    TextField("Type the folder name", text: $folderName )
+                    TextField("Type the folder name", text: $newFolderName)
                         .focused($txtFieldFocused)
                         .padding(.vertical, 8)
                 }
@@ -41,9 +36,9 @@ struct CreateFolderView: View {
                 Section("Select a color") {
                     LazyVGrid(columns: columns) {
                         ForEach(Colors.allColors, id: \.self) { color in
-                            ColorsGridItemViewComponent(iconColor: color, isSelected: color == folderColorName)
+                            ColorsGridItemViewComponent(iconColor: color, isSelected: color == newFolderColorName)
                                 .onTapGesture {
-                                    folderColorName = color
+                                    newFolderColorName = color
                                 }
                         }
                     }
@@ -52,9 +47,9 @@ struct CreateFolderView: View {
                 Section("Select an icon") {
                     LazyVGrid(columns: columns) {
                         ForEach(Icons.allIcons.sorted(), id: \.self) { icon in
-                            IconsGridItemView(iconName: icon, isSelected: icon == folderIconName)
+                            IconsGridItemView(iconName: icon, isSelected: icon == newFolderIconName)
                                 .onTapGesture {
-                                    folderIconName = icon
+                                    newFolderIconName = icon
                                 }
                         }
                     }
@@ -64,51 +59,53 @@ struct CreateFolderView: View {
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Done") {
-                        folderIsBeingModified ? dismiss() : createFolder()
+                        folderIsBeingModified ? confirmChanges() : createFolder()
                     }
-                    .disabled(folderName.isEmpty)
+                    .disabled(newFolderName.isEmpty)
                 }
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") {
-                        undoChages()
+                        dismiss()
                     }
                 }
             }
             .onAppear {
                 if folderIsBeingModified {
-                    copyOriginalDetails()
+                   // copyOriginalDetails()
+                    showCurrentFolderDetails()
                 }
             }
         }
     }
     
     func createFolder() {
-        let newFolder = FolderModel(id: UUID(), name: folderName, iconName: folderIconName ?? "folder", colorName: folderColorName)
+        let newFolder = FolderModel(id: UUID(), name: newFolderName, iconName: newFolderIconName, colorName: newFolderColorName)
         context.insert(newFolder)
-        folderName = ""
-        folderIconName = ""
-        folderColorName = ""
         dismiss()
     }
     
-    func undoChages() {
-        folderName = originalFolderName
-        folderIconName = originalFolderIcon
-        folderColorName = originalFolderColor
-        dismiss()
+    func confirmChanges() {
+        if let folder = folder {
+            folder.name = newFolderName
+            folder.iconName = newFolderIconName
+            folder.colorName = newFolderColorName
+            dismiss()
+        }
     }
     
-    func copyOriginalDetails() {
-        originalFolderName = folderName
-        originalFolderIcon = folderIconName!
-        originalFolderColor = folderColorName
+    func showCurrentFolderDetails() {
+        if let folder = folder {
+            newFolderName = folder.name
+            newFolderIconName = folder.iconName
+            newFolderColorName = folder.colorName
+        }
     }
+    
 }
 
 #Preview {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
     let container = try! ModelContainer(for: FolderModel.self, configurations: config)
-    
-    return CreateFolderView(context: ModelContext(container), folderName: .constant("Folder Name"), folderIconName: .constant("heart.fill"), folderColorName: .constant("red"), folderIsBeingModified: false)
+    return CreateFolderView(context: ModelContext(container), folderIsBeingModified: false)
 }
 
