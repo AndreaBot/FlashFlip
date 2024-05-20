@@ -36,6 +36,27 @@ struct CardsCarouselView: View {
                     
                     Spacer()
                     
+                    HStack {
+                        Button {
+                            withAnimation {
+                                currentIndex -= 1
+                            }
+                        } label: {
+                            Image(systemName: "arrowshape.left.circle")
+                                .font(.largeTitle)
+                        }
+                        .disabled(currentIndex == 0)
+                        Spacer()
+                        Button {
+                            withAnimation {
+                                currentIndex += 1
+                            }
+                        } label: {
+                            Image(systemName: "arrowshape.right.circle")
+                                .font(.largeTitle)
+                        }
+                        .disabled(currentIndex == deck.cards.count - 1)
+                    }
                     VStack(spacing: 20) {
                         Button {
                             selectedCard = deck.cards[currentIndex]
@@ -80,6 +101,9 @@ struct CardsCarouselView: View {
     }
 }
 
-//#Preview {
-//    CardsCarouselView()
-//}
+#Preview {
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: FolderModel.self, configurations: config)
+    
+    return  CardsCarouselView (deck: DeckModel(id: UUID(), name: "Test"), context: ModelContext(container))
+}
