@@ -28,7 +28,7 @@ struct HomeView: View {
                     }
                     .swipeActions{
                         Button(role: .destructive) {
-                            deleteFolder(folder)
+                            DataManager.deleteFolder(context, folder)
                         } label: {
                             Image(systemName: "trash")
                         }
@@ -72,10 +72,6 @@ struct HomeView: View {
         .fullScreenCover(item: $selectedFolder) { selectedFolder in
             CreateFolderView(context: context, folder: selectedFolder, folderIsBeingModified: true)
         }
-    }
-    
-    func deleteFolder(_ folder: FolderModel) {
-        context.delete(folder)
     }
 }
 

@@ -70,28 +70,23 @@ struct CardCollectionView: View {
                     TextField("Type the new name", text: $newDeckName)
                         .foregroundStyle(.black)
                         .onSubmit {
-                            updateDeckName()
+                            if newDeckName.isEmpty {
+                                return
+                            }
+                            deck.name = newDeckName
+                            showDeckNameEditing = false
                         }
                     Button("Cancel") {}
                     Button("Confirm") {
-                        updateDeckName()
+                        deck.name = newDeckName
                     }
+                    .disabled(newDeckName.isEmpty)
                 }
-                .onAppear {
+                .onChange(of: showDeckNameEditing) { _, _ in
                     newDeckName = deck.name
                 }
             }
         }
-    }
-    
-    func updateDeckName() {
-        guard newDeckName != "" else {
-            newDeckName = deck.name
-            showDeckNameEditing = false
-            return
-        }
-        deck.name = newDeckName
-        showDeckNameEditing = false
     }
 }
 

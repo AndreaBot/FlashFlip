@@ -59,7 +59,8 @@ struct CreateFolderView: View {
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Done") {
-                        folderIsBeingModified ? confirmChanges() : createFolder()
+                        folderIsBeingModified ? DataManager.confirmChanges(folder, newFolderName, newFolderIconName, newFolderColorName) : DataManager.createFolder(context, newFolderName, newFolderIconName, newFolderColorName)
+                        dismiss()
                     }
                     .disabled(newFolderName.isEmpty)
                 }
@@ -71,25 +72,9 @@ struct CreateFolderView: View {
             }
             .onAppear {
                 if folderIsBeingModified {
-                   // copyOriginalDetails()
                     showCurrentFolderDetails()
                 }
             }
-        }
-    }
-    
-    func createFolder() {
-        let newFolder = FolderModel(id: UUID(), name: newFolderName, iconName: newFolderIconName, colorName: newFolderColorName)
-        context.insert(newFolder)
-        dismiss()
-    }
-    
-    func confirmChanges() {
-        if let folder = folder {
-            folder.name = newFolderName
-            folder.iconName = newFolderIconName
-            folder.colorName = newFolderColorName
-            dismiss()
         }
     }
     
@@ -100,7 +85,6 @@ struct CreateFolderView: View {
             newFolderColorName = folder.colorName
         }
     }
-    
 }
 
 #Preview {

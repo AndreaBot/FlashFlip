@@ -16,7 +16,7 @@ struct IconsGridItemView: View {
         Image(systemName: iconName)
             .resizable()
             .scaledToFit()
-        .frame(width: 40, height: 40)
+            .frame(width: 40, height: 40)
             .padding(10)
             .overlay {
                 Circle()

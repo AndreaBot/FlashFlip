@@ -30,7 +30,7 @@ struct DeckListView: View {
                 }
                 .onDelete(perform: { indexSet in
                     for index in indexSet {
-                        deleteDeck(folder.decks[index])
+                        DataManager.deleteDeck(context, folder.decks[index])
                     }
                 })
                 .listRowSeparator(.hidden)
@@ -73,13 +73,15 @@ struct DeckListView: View {
                         guard !deckName.isEmpty else {
                             return
                         }
-                        createNewDeck()
+                        DataManager.createNewDeck(context, folder: folder, deckName)
+                        deckName = ""
                     }
                 Button("Cancel") {
                     deckName = ""
                 }
                 Button("Confirm") {
-                    createNewDeck()
+                    DataManager.createNewDeck(context, folder: folder, deckName)
+                    deckName = ""
                 }
                 .disabled(deckName.isEmpty)
             }
@@ -87,21 +89,6 @@ struct DeckListView: View {
                 CreateFolderView(context: context, folder: folder, folderIsBeingModified: true)
             }
         }
-    }
-    
-    func createNewDeck() {
-        folder.decks.append(DeckModel(id: UUID(), name: deckName, folder: folder))
-        do {
-            try context.save()
-            deckName = ""
-        } catch {
-            print(error.localizedDescription)
-        }
-        showingDeckCreation = false
-    }
-    
-    func deleteDeck(_ deck: DeckModel) {
-        context.delete(deck)
     }
 }
 

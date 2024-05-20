@@ -46,7 +46,10 @@ struct CardCreationView: View {
                     Spacer()
                     
                     Button {
-                        cardIsBeingModified ? dismiss() : createNewCard()
+                        cardIsBeingModified ? updateCard() : DataManager.createNewCard(cardQuestion, cardAnswer, deck, context)
+                        cardQuestion = ""
+                        cardAnswer = ""
+                        txtIsFocused = true
                     } label: {
                         Text(cardIsBeingModified ? "Confirm Changes" : "Create card")
                             .frame(maxWidth: .infinity)
@@ -58,12 +61,11 @@ struct CardCreationView: View {
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Done") {
-                        //showCardCreation = false
                         dismiss()
                     }
                 }
             }
-            .onAppear{
+            .onAppear {
                 if let card = card {
                     cardQuestion = card.question
                     cardAnswer = card.answer
@@ -73,21 +75,12 @@ struct CardCreationView: View {
         }
     }
     
-    func createNewCard() {
-        guard !cardQuestion.isEmpty && !cardAnswer.isEmpty else {
-            return
+    func updateCard() {
+        if let card = card {
+            card.question = cardQuestion
+            card.answer = cardAnswer
+            dismiss()
         }
-        
-        deck.cards.append(CardModel(id: UUID(), question: cardQuestion, answer: cardAnswer))
-        
-        do {
-            try context.save()
-        } catch {
-            print(error.localizedDescription)
-        }
-        cardQuestion = ""
-        cardAnswer = ""
-        txtIsFocused = true
     }
 }
 
