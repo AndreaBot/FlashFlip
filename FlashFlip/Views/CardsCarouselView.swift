@@ -14,7 +14,7 @@ struct CardsCarouselView: View {
     var context: ModelContext
     @State private var currentIndex: Int = 0
     @GestureState private var dragOffset: CGFloat = 0
-    @State private var showingCardEditing = false
+    @State private var selectedCard: CardModel?
     
     var body: some View {
         NavigationStack {
@@ -38,7 +38,7 @@ struct CardsCarouselView: View {
                     
                     VStack(spacing: 20) {
                         Button {
-                            showingCardEditing = true
+                            selectedCard = deck.cards[currentIndex]
                         } label: {
                             Text("Edit Card")
                                 .padding(.horizontal)
@@ -71,8 +71,8 @@ struct CardsCarouselView: View {
                         })
                 )
                 .navigationTitle("\(deck.name)")
-                .sheet(isPresented: $showingCardEditing, content: {
-                    CardCreationView(deck: deck, context: context, cardQuestion: $deck.cards[currentIndex].question, cardAnswer: $deck.cards[currentIndex].answer, showCardCreation: $showingCardEditing, cardIsBeingModified: true)
+                .sheet(item: $selectedCard, content: { cardModel in
+                    CardCreationView(deck: deck, context: context, cardIsBeingModified: true, card: cardModel)
                         .presentationDetents([.fraction(0.34)])
                 })
             }

@@ -10,16 +10,18 @@ import SwiftData
 
 struct CardCreationView: View {
     
+    @Environment(\.dismiss) var dismiss
+    
     @Bindable var deck: DeckModel
     var context: ModelContext
     
-    @Binding var cardQuestion: String
-    @Binding var cardAnswer: String
-    @Binding var showCardCreation: Bool
+    @State private var cardQuestion = ""
+    @State private var cardAnswer = ""
     
     @FocusState var txtIsFocused: Bool
     
     let cardIsBeingModified: Bool
+    var card: CardModel?
     
     var body: some View {
         NavigationStack {
@@ -44,7 +46,7 @@ struct CardCreationView: View {
                     Spacer()
                     
                     Button {
-                        cardIsBeingModified ? showCardCreation.toggle() : createnewCard()
+                        cardIsBeingModified ? dismiss() : createNewCard()
                     } label: {
                         Text(cardIsBeingModified ? "Confirm Changes" : "Create card")
                             .frame(maxWidth: .infinity)
@@ -56,23 +58,28 @@ struct CardCreationView: View {
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Done") {
-                        showCardCreation = false
+                        //showCardCreation = false
+                        dismiss()
                     }
                 }
             }
-            .onAppear(perform: {
+            .onAppear{
+                if let card = card {
+                    cardQuestion = card.question
+                    cardAnswer = card.answer
+                }
                 txtIsFocused = true
-            })
+            }
         }
     }
     
-    func createnewCard() {
+    func createNewCard() {
         guard !cardQuestion.isEmpty && !cardAnswer.isEmpty else {
             return
         }
         
-        let newCard = CardModel(id: UUID(), question: cardQuestion, answer: cardAnswer)
-        deck.cards.append(newCard)
+        deck.cards.append(CardModel(id: UUID(), question: cardQuestion, answer: cardAnswer))
+        
         do {
             try context.save()
         } catch {

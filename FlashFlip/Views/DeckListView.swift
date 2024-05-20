@@ -23,7 +23,7 @@ struct DeckListView: View {
             List {
                 ForEach(folder.decks) { deck in
                     NavigationLink {
-                        CardCollectionView(context: context, deck: deck)
+                        CardCollectionView(deck: deck, context: context)
                     } label: {
                         DeckViewComponent(context: context, deck: deck)
                     }
@@ -75,15 +75,13 @@ struct DeckListView: View {
                         }
                         createNewDeck()
                     }
-                
+                Button("Cancel") {
+                    deckName = ""
+                }
                 Button("Confirm") {
                     createNewDeck()
                 }
                 .disabled(deckName.isEmpty)
-                  
-                Button("Cancel") {
-                    deckName = ""
-                }
             }
             .sheet(isPresented: $showFolderEditing) {
                 CreateFolderView(context: context, folder: folder, folderIsBeingModified: true)
