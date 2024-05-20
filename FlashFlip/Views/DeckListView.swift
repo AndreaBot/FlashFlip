@@ -11,7 +11,7 @@ import SwiftData
 struct DeckListView: View {
     
     @State private var deckName = ""
-    @State private var showingPopUp = false
+    @State private var showingDeckCreation = false
     @State private var showFolderEditing = false
     
     var context: ModelContext
@@ -37,7 +37,7 @@ struct DeckListView: View {
                 .listRowBackground(Color.clear)
                 
                 Button {
-                    showingPopUp = true
+                    showingDeckCreation = true
                 } label: {
                     CreateElementComponent(height: 95)
                 }
@@ -47,19 +47,17 @@ struct DeckListView: View {
             }
             .navigationTitle(folder.name)
             .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button {
-                        showingPopUp = true
-                    } label: {
-                        Image(systemName: "plus")
-                            .fontWeight(.semibold)
-                    }
-                }
-                ToolbarItem(placement: .primaryAction) {
+                ToolbarItemGroup(placement: .confirmationAction) {
                     Button {
                         showFolderEditing = true
                     } label: {
                         Image(systemName: "pencil")
+                            .fontWeight(.semibold)
+                    }
+                    Button {
+                        showingDeckCreation = true
+                    } label: {
+                        Image(systemName: "plus")
                             .fontWeight(.semibold)
                     }
                 }
@@ -69,18 +67,21 @@ struct DeckListView: View {
                         .fontWeight(.semibold)
                 }
             }
-            .alert("Create New Deck", isPresented: $showingPopUp) {
+            .alert("Create New Deck", isPresented: $showingDeckCreation) {
                 TextField("New Deck Name", text: $deckName)
                     .onSubmit {
+                        guard !deckName.isEmpty else {
+                            return
+                        }
                         createNewDeck()
                     }
                 
                 Button("Confirm") {
                     createNewDeck()
                 }
+                .disabled(deckName.isEmpty)
                   
                 Button("Cancel") {
-                    showingPopUp = false
                     deckName = ""
                 }
             }
@@ -91,21 +92,14 @@ struct DeckListView: View {
     }
     
     func createNewDeck() {
-        guard !deckName.isEmpty else {
-            showingPopUp = false
-            return
-        }
-        
-        let newDeck = DeckModel(id: UUID(), name: deckName, folder: folder)
-        folder.decks.append(newDeck)
-        
+        folder.decks.append(DeckModel(id: UUID(), name: deckName, folder: folder))
         do {
             try context.save()
             deckName = ""
         } catch {
             print(error.localizedDescription)
         }
-        showingPopUp = false
+        showingDeckCreation = false
     }
     
     func deleteDeck(_ deck: DeckModel) {
