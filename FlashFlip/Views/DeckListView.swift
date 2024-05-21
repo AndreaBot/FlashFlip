@@ -39,7 +39,7 @@ struct DeckListView: View {
                 Button {
                     showingDeckCreation = true
                 } label: {
-                    CreateElementComponent(height: 95)
+                    CreateElementComponent(height: 95, text: "Create new deck")
                 }
                 .buttonStyle(.plain)
                 .listRowSeparator(.hidden)

@@ -47,7 +47,7 @@ struct HomeView: View {
                 Button {
                     showingCreateFolderView = true
                 } label: {
-                    CreateElementComponent(height: 150)
+                    CreateElementComponent(height: 150, text: "Create new folder")
                 }
                 .buttonStyle(.plain)
                 .listRowSeparator(.hidden)

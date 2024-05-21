@@ -10,22 +10,27 @@ import SwiftUI
 struct CreateElementComponent: View {
     
     let height: CGFloat
+    let text: String
     
     var body: some View {
-        Image(systemName: "plus")
-            .resizable()
-            .scaledToFit()
-            .fontWeight(.heavy)
-            .padding(20)
-            .frame(height: height)
-            .containerRelativeFrame(.horizontal) { size, axis in
-                size * 0.9
-            }
-            .background(Color.primary).opacity(0.2)
-            .clipShape(RoundedRectangle(cornerRadius: 20))
+        HStack(spacing: 20) {
+            Image(systemName: "plus")
+                .resizable()
+                .scaledToFit()
+            
+            Text(text)
+        }
+        .fontWeight(.heavy)
+        .padding()
+        .frame(height: height)
+        .containerRelativeFrame(.horizontal) { size, axis in
+            size
+        }
+        .background(Color.primary).opacity(0.2)
+        .clipShape(RoundedRectangle(cornerRadius: 20))
     }
 }
 
 #Preview {
-    CreateElementComponent(height: 150)
+    CreateElementComponent(height: 150, text: "Create new folder")
 }
