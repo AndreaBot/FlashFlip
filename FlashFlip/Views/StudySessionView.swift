@@ -9,29 +9,24 @@ import SwiftUI
 
 struct StudySessionView: View {
     
-    let deck: DeckModel
-    
-    @State private var swipeAmount = 0.0
-    @State private var studyCards = [CardModel]()
-    @State private var correctArray = [CardModel]()
-    @State private var wrongArray = [CardModel]()
+    @State var viewModel: StudySessionViewModel
     
     
     var body: some View {
         NavigationStack {
-            if !studyCards.isEmpty {
-                CardsStackView(deck: deck, correctArray: $correctArray, wrongArray: $wrongArray, studyCards: $studyCards)
+            if !viewModel.studyCards.isEmpty {
+                CardsStackView(viewModel: $viewModel)
             } else {
-                EndView( correctArray: $correctArray, wrongArray: $wrongArray, studyDeck: $studyCards, deck: deck)
+                EndView(viewModel: $viewModel)
             }
         }
         .onAppear {
-            studyCards.append(contentsOf: deck.cards.shuffled())
+            viewModel.startNewSession()
         }
         .navigationTitle("Study Session")
     }
 }
 
-#Preview {
-    StudySessionView(deck: DeckModel(id: UUID(), name: "Test"))
-}
+//#Preview {
+//    StudySessionView()
+//}

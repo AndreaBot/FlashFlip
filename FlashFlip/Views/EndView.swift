@@ -11,12 +11,8 @@ struct EndView: View {
     
     @Environment (\.dismiss) var dismiss
     
-    @Binding var correctArray: [CardModel]
-    @Binding var wrongArray: [CardModel]
+    @Binding var viewModel: StudySessionViewModel
     
-    @Binding var studyDeck: [CardModel]
-    
-    var deck: DeckModel
     
     var body: some View {
         VStack {
@@ -24,16 +20,15 @@ struct EndView: View {
                 Text("END OF SESSION")
                     .font(.title).fontWeight(.semibold)
                 
-                Text("You scored \(correctArray.count)/\(correctArray.count + wrongArray.count)")
+                Text("You scored \(viewModel.correctAnswers.count)/\(viewModel.correctAnswers.count + viewModel.wrongAnswers.count)")
                     .font(.title3)
             }
             
             List {
                 Section {
-                    ForEach(correctArray) { card in
+                    ForEach(viewModel.correctAnswers) { card in
                         HStack {
                             Text("\(card.question)")
-                            
                             Spacer()
                             Text("\(card.answer)")
                             
@@ -48,10 +43,9 @@ struct EndView: View {
                 }
                 
                 Section {
-                    ForEach(wrongArray) { card in
+                    ForEach(viewModel.wrongAnswers) { card in
                         HStack {
                             Text("\(card.question)")
-                            
                             Spacer()
                             Text("\(card.answer)")
                             
@@ -69,9 +63,7 @@ struct EndView: View {
             
             VStack {
                 Button {
-                    correctArray.removeAll()
-                    wrongArray.removeAll()
-                    studyDeck.append(contentsOf: deck.cards.shuffled())
+                    viewModel.startNewSession()
                 } label: {
                     Text("Start again")
                         .font(.title2)

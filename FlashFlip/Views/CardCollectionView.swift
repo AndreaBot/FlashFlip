@@ -39,7 +39,7 @@ struct CardCollectionView: View {
                         .disabled(deck.cards.isEmpty ? true : false)
                         
                         NavigationLink("Start Study Session") {
-                            StudySessionView(deck: deck)
+                            StudySessionView(viewModel: StudySessionViewModel(deck: deck))
                         }
                         .disabled(deck.cards.isEmpty)
                         
