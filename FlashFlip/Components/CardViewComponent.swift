@@ -38,6 +38,5 @@ struct CardViewComponent: View {
 //#Preview {
 //    let config = ModelConfiguration(isStoredInMemoryOnly: true)
 //    let container = try! ModelContainer(for: FolderModel.self, configurations: config)
-//
-//    return CardViewComponent(card: CardModel(id: UUID(), question: "aa", answer: "bb"), deck: DeckModel(id: UUID(), name: "cc"))
+//    return CardViewComponent(card: CardModel(id: UUID(), question: "aa", answer: "bb"), deck: DeckModel(id: UUID(), name: "cc", folder: FolderModel(id: UUID(), name: "Test", iconName: "swift", colorName: "red")))
 //}

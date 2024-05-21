@@ -61,6 +61,5 @@ struct DeckViewComponent: View {
 //#Preview {
 //    let config = ModelConfiguration(isStoredInMemoryOnly: true)
 //    let container = try! ModelContainer(for: FolderModel.self, configurations: config)
-//    
-//    return DeckViewComponent(context: ModelContext(container), deck: DeckModel(id: UUID(), name: "test", folder: FolderModel(id: UUID(), name: "test", iconName: "swift", colorName: "green")))
+//    return DeckViewComponent(context: ModelContext(container), deck: DeckModel(id: UUID(), name: "Test"))
 //}

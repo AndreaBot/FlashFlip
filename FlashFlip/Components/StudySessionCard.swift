@@ -83,11 +83,7 @@ struct StudySessionCard: View {
     }
 }
 
-//#Preview {
-//    let correctArray = [CardModel(id: UUID(), question: "a", answer: "aa"),
-//                        CardModel(id: UUID(), question: "b", answer: "bb")]
-//    let wrongArray = [CardModel(id: UUID(), question: "1", answer: "11"),
-//                        CardModel(id: UUID(), question: "2", answer: "22")]
-//
-//    return StudySessionCard(card: CardModel(id: UUID(), question: "4x4?", answer: "16"), color: .yellow, array: .constant([CardModel]()), correctGuesses: .constant(correctArray), wrongGuesses: .constant(wrongArray))
-//}
+#Preview {
+    @State var viewModel = StudySessionViewModel(deck: DeckModel(id: UUID(), name: "11"))
+    return StudySessionCard(card: CardModel(id: UUID(), question: "1", answer: "1"), color: .blue, viewModel: $viewModel)
+}

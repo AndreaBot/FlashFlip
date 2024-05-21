@@ -22,9 +22,13 @@ struct CardsStackView: View {
     }
 }
 
-//#Preview {
-//    let correctArray = [CardModel(id: UUID(), question: "correct", answer: "correct")]
-//    let wrongArray = [CardModel(id: UUID(), question: "wrong", answer: "wrong")]
-//
-//    return CardsStackView(deck: DeckModel(id: UUID(), name: "Test"), correctArray: .constant(correctArray), wrongArray: .constant(wrongArray), studyCards: .constant(correctArray))
-//}
+
+#Preview {
+    @State var viewModel = StudySessionViewModel(deck: DeckModel(id: UUID(), name: "Test"))
+    var stack = viewModel.studyCards
+    stack.append(CardModel(id: UUID(), question: "1", answer: "1"))
+    viewModel.studyCards = stack
+     return CardsStackView(viewModel: $viewModel)
+        
+}
+
