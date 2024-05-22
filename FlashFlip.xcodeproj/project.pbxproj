@@ -31,6 +31,7 @@
 		6281D1092B8E83FA00E097C0 /* CardCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6281D1082B8E83FA00E097C0 /* CardCreationView.swift */; };
 		628E7C662B8FD86F009AEF9A /* CardsCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628E7C652B8FD86F009AEF9A /* CardsCarouselView.swift */; };
 		629D16C32BFBEC7200E93AC7 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629D16C22BFBEC7200E93AC7 /* DataManager.swift */; };
+		62A916832BFE734500582C9D /* MarkButtonsStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A916822BFE734500582C9D /* MarkButtonsStack.swift */; };
 		62F611542B94C52A00F5005E /* EndView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F611532B94C52A00F5005E /* EndView.swift */; };
 		62F611562B94CF0B00F5005E /* CardsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F611552B94CF0B00F5005E /* CardsStackView.swift */; };
 /* End PBXBuildFile section */
@@ -61,6 +62,7 @@
 		6281D1082B8E83FA00E097C0 /* CardCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCreationView.swift; sourceTree = "<group>"; };
 		628E7C652B8FD86F009AEF9A /* CardsCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsCarouselView.swift; sourceTree = "<group>"; };
 		629D16C22BFBEC7200E93AC7 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		62A916822BFE734500582C9D /* MarkButtonsStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkButtonsStack.swift; sourceTree = "<group>"; };
 		62F611532B94C52A00F5005E /* EndView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndView.swift; sourceTree = "<group>"; };
 		62F611552B94CF0B00F5005E /* CardsStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsStackView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -136,7 +138,6 @@
 				62003EA12B8A3A7000F888AE /* CardCollectionView.swift */,
 				628E7C652B8FD86F009AEF9A /* CardsCarouselView.swift */,
 				62668B822B93368700F9F944 /* StudySessionView.swift */,
-				62F611552B94CF0B00F5005E /* CardsStackView.swift */,
 				6281D1082B8E83FA00E097C0 /* CardCreationView.swift */,
 				62F611532B94C52A00F5005E /* EndView.swift */,
 			);
@@ -153,6 +154,8 @@
 				62003EA52B8B8B9C00F888AE /* DeckViewComponent.swift */,
 				62003EA32B8A3E9100F888AE /* CardViewComponent.swift */,
 				62668BA22B93CA8700F9F944 /* StudySessionCard.swift */,
+				62F611552B94CF0B00F5005E /* CardsStackView.swift */,
+				62A916822BFE734500582C9D /* MarkButtonsStack.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -253,6 +256,7 @@
 				629D16C32BFBEC7200E93AC7 /* DataManager.swift in Sources */,
 				62003EA22B8A3A7000F888AE /* CardCollectionView.swift in Sources */,
 				62003E8D2B89F4E300F888AE /* DeckModel.swift in Sources */,
+				62A916832BFE734500582C9D /* MarkButtonsStack.swift in Sources */,
 				62003EA82B8CF5F400F888AE /* CreateElementComponent.swift in Sources */,
 				62003EA62B8B8B9C00F888AE /* DeckViewComponent.swift in Sources */,
 				62003E882B89F09000F888AE /* FolderViewComponent.swift in Sources */,

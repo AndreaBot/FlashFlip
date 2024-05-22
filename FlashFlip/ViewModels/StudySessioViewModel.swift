@@ -14,6 +14,7 @@ final class StudySessionViewModel {
     var studyCards = [CardModel]()
     var correctAnswers = [CardModel]()
     var wrongAnswers = [CardModel]()
+    var studySessionIndex = 0
     
     init(deck: DeckModel, studyCards: [CardModel] = [CardModel](), correctArray: [CardModel] = [CardModel](), wrongArray: [CardModel] = [CardModel]()) {
         self.deck = deck
@@ -29,7 +30,8 @@ final class StudySessionViewModel {
             wrongAnswers.append(studyCards.last!)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-            self.studyCards.removeLast()
+            self.studyCards.remove(at: self.studySessionIndex)
+            self.studySessionIndex -= 1
         }
     }
     
@@ -37,8 +39,13 @@ final class StudySessionViewModel {
         correctAnswers.removeAll()
         wrongAnswers.removeAll()
         studyCards.append(contentsOf: deck.cards.shuffled())
+        studySessionIndex = studyCards.count - 1
+        for card in studyCards {
+            card.rotationAmount = 0
+            card.swipeAmount = 0
+            card.showingAnswer = false
+        }
     }
 }
-
 
 

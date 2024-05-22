@@ -15,10 +15,14 @@ final class CardModel: Identifiable {
     var question: String
     var answer: String
     
+    var showingAnswer = false
+    var rotationAmount = 0.0
+    var swipeAmount = 0.0
+    
     init(id: UUID, question: String, answer: String) {
         self.id = UUID()
         self.question = question
         self.answer = answer
     }
-
+    
 }

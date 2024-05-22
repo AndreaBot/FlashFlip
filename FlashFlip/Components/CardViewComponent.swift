@@ -14,7 +14,6 @@ struct CardViewComponent: View {
     let deck: DeckModel
     
     var body: some View {
-        
         ZStack(alignment: .topLeading) {
             RoundedRectangle(cornerRadius: 15)
                 .foregroundStyle(Colors.setColor(using: deck.folder!.colorName))

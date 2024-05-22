@@ -27,6 +27,7 @@ struct StudySessionView: View {
     }
 }
 
+
 #Preview {
     let viewModel = StudySessionViewModel(deck: DeckModel(id: UUID(), name: "Test"))
     return StudySessionView(viewModel: viewModel)
