@@ -56,6 +56,15 @@ final class StudySessionViewModel {
     func calculateDeckAverageCorrectAnswers() {
         deck.averageCorrectAnswers = (deck.averageCorrectAnswers + sessionCorrectPercentage) / 2
     }
+    
+    func calculateCardScores() {
+        for card in correctAnswers {
+            card.correctAnswersCount += 1
+        }
+        for card in wrongAnswers {
+            card.wrongAnswersCount += 1
+        }
+    }
 }
 
 

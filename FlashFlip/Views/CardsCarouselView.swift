@@ -46,7 +46,11 @@ struct CardsCarouselView: View {
                                 .font(.largeTitle)
                         }
                         .disabled(currentIndex == 0)
+                        
                         Spacer()
+                        CardStatsViewComponent(card: deck.cards[currentIndex])
+                        Spacer()
+                        
                         Button {
                             withAnimation {
                                 currentIndex += 1

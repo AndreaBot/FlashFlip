@@ -35,7 +35,7 @@ struct MarkButtonsStack: View {
                 card.swipeAmount += 180
                 viewModel.progressGame(mark: "wrong")
             } label: {
-                Image(systemName: "multiply")
+                Image(systemName: "xmark")
                     .font(.largeTitle).fontWeight(.bold)
             }
             

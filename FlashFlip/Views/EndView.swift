@@ -90,6 +90,7 @@ struct EndView: View {
             viewModel.deck.sessionsCount += 1
             viewModel.calculateSessionCorrectAnswersPercentage()
             viewModel.calculateDeckAverageCorrectAnswers()
+            viewModel.calculateCardScores()
         }
     }
 }
