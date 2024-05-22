@@ -30,6 +30,8 @@ final class StudySessionViewModel {
         } else if mark == "wrong" {
             wrongAnswers.append(studyCards.last!)
         }
+        studyCards[studySessionIndex].timesAppeared += 1
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
             self.studyCards.remove(at: self.studySessionIndex)
             self.studySessionIndex -= 1

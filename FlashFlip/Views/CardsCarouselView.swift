@@ -100,6 +100,9 @@ struct CardsCarouselView: View {
                     CardCreationView(deck: deck, context: context, cardIsBeingModified: true, card: cardModel)
                         .presentationDetents([.fraction(0.34)])
                 })
+                .onChange(of: currentIndex) { oldValue, newValue in
+                    print(deck.cards[currentIndex].timesAppeared)
+                }
             }
         }
     }

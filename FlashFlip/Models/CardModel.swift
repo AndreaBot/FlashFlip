@@ -21,6 +21,7 @@ final class CardModel: Identifiable {
     
     var correctAnswersCount = 0
     var wrongAnswersCount = 0
+    var timesAppeared = 0
     
     init(id: UUID, question: String, answer: String) {
         self.id = UUID()
