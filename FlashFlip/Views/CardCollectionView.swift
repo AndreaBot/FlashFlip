@@ -39,10 +39,14 @@ struct CardCollectionView: View {
                         .disabled(deck.cards.isEmpty ? true : false)
                         
                         NavigationLink("Start Study Session") {
-                            StudySessionView(viewModel: StudySessionViewModel(deck: deck))
+                            StudySessionView(viewModel: StudySessionViewModel(deck: deck, studyCards: deck.cards.shuffled()))
                         }
                         .disabled(deck.cards.isEmpty)
-                        
+                        HStack {
+                            Text("Number of sessions:")
+                            Spacer()
+                            Text("\(deck.sessionsCount)")
+                        }
                     }
                 }
                 .navigationTitle(deck.name)

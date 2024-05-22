@@ -11,7 +11,7 @@ import Foundation
 final class StudySessionViewModel {
     
     let deck: DeckModel
-    var studyCards = [CardModel]()
+    var studyCards: [CardModel]
     var correctAnswers = [CardModel]()
     var wrongAnswers = [CardModel]()
     var studySessionIndex = 0
@@ -38,7 +38,7 @@ final class StudySessionViewModel {
     func startNewSession() {
         correctAnswers.removeAll()
         wrongAnswers.removeAll()
-        studyCards.append(contentsOf: deck.cards.shuffled())
+        studyCards = deck.cards.shuffled()
         studySessionIndex = studyCards.count - 1
         for card in studyCards {
             card.rotationAmount = 0

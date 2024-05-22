@@ -16,6 +16,8 @@ final class DeckModel: Identifiable {
     var folder: FolderModel?
     var cards = [CardModel]()
     
+    var sessionsCount = 0
+    
     init(id: UUID, name: String, folder: FolderModel? = nil) {
         self.id = UUID()
         self.name = name
