@@ -68,10 +68,10 @@ struct EndView: View {
                     Text("Start again")
                         .font(.title2)
                         .padding()
-                        .background(.blue)
-                        .foregroundStyle(.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 15))
+                    
                 }
+                .buttonStyle(.borderedProminent)
+                .disabled(viewModel.practisingWeakCards)
                 
                 Button {
                     dismiss()
@@ -79,10 +79,8 @@ struct EndView: View {
                     Text("Go Back")
                         .font(.title2)
                         .padding()
-                        .background(.blue)
-                        .foregroundStyle(.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 15))
                 }
+                .buttonStyle(.borderedProminent)
             }
         }
         .padding(.vertical)
@@ -95,12 +93,12 @@ struct EndView: View {
     }
 }
 
-#Preview {
-    let correctArray = [CardModel(id: UUID(), question: "a", answer: "aa"),
-                        CardModel(id: UUID(), question: "b", answer: "bb")]
-    let wrongArray = [CardModel(id: UUID(), question: "1", answer: "11"),
-                      CardModel(id: UUID(), question: "2", answer: "22")]
-    
-    @State var viewModel = StudySessionViewModel(deck: DeckModel(id: UUID(), name: "Test"))
-    return EndView(viewModel: $viewModel)
-}
+//#Preview {
+//    let correctArray = [CardModel(id: UUID(), question: "a", answer: "aa"),
+//                        CardModel(id: UUID(), question: "b", answer: "bb")]
+//    let wrongArray = [CardModel(id: UUID(), question: "1", answer: "11"),
+//                      CardModel(id: UUID(), question: "2", answer: "22")]
+//
+//    @State var viewModel = StudySessionViewModel(deck: DeckModel(id: UUID(), name: "Test"))
+//    return EndView(viewModel: $viewModel)
+//}

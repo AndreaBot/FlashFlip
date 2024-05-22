@@ -39,9 +39,15 @@ struct CardCollectionView: View {
                         .disabled(deck.cards.isEmpty ? true : false)
                         
                         NavigationLink("Start Study Session") {
-                            StudySessionView(viewModel: StudySessionViewModel(deck: deck, studyCards: deck.cards.shuffled()))
+                            StudySessionView(viewModel: StudySessionViewModel(deck: deck, studyCards: deck.cards.shuffled(), practisingWeakCards: false))
                         }
                         .disabled(deck.cards.isEmpty)
+                        
+                        NavigationLink("Practice weak cards") {
+                            StudySessionView(viewModel: StudySessionViewModel(deck: deck, studyCards: StudySessionViewModel.createWeakCardsSession(deck: deck), practisingWeakCards: true))
+                        }
+                        .disabled(deck.cards.isEmpty)
+                        
                         HStack {
                             Text("Number of sessions:")
                             Spacer()

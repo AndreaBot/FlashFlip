@@ -10,25 +10,34 @@ import SwiftUI
 struct StudySessionView: View {
     
     @State var viewModel: StudySessionViewModel
-    
+    @State private var showingEmpty = false
     
     var body: some View {
         NavigationStack {
-            if !viewModel.studyCards.isEmpty {
-                CardsStackView(viewModel: $viewModel)
-            } else {
-                EndView(viewModel: $viewModel)
+            ZStack {
+                if showingEmpty {
+                    ContentUnavailableView("Yahoo!", systemImage: "party.popper.fill", description: Text("You have no weak cards to practice!\nCards you have answered incorrectly 50% or more of the time will automatically appear here."))
+                } else {
+                    if !viewModel.studyCards.isEmpty {
+                        CardsStackView(viewModel: $viewModel)
+                    } else {
+                        EndView(viewModel: $viewModel)
+                    }
+                }
             }
+            .onAppear {
+                viewModel.startNewSession()
+                if viewModel.studyCards.isEmpty {
+                    showingEmpty = true
+                }
+                
+            }
+            .navigationTitle("Study Session")
         }
-        .onAppear {
-            viewModel.startNewSession()
-        }
-        .navigationTitle("Study Session")
     }
 }
 
-
-#Preview {
-    let viewModel = StudySessionViewModel(deck: DeckModel(id: UUID(), name: "Test"))
-    return StudySessionView(viewModel: viewModel)
-}
+//#Preview {
+//    let viewModel = StudySessionViewModel(deck: DeckModel(id: UUID(), name: "Test"))
+//    return StudySessionView(viewModel: viewModel)
+//}

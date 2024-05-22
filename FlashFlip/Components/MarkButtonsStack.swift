@@ -28,7 +28,6 @@ struct MarkButtonsStack: View {
             .background(.green)
             .clipShape(Circle())
             
-            
             Spacer()
             
             Button {

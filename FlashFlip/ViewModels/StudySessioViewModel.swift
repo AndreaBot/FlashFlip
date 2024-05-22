@@ -15,13 +15,18 @@ final class StudySessionViewModel {
     var correctAnswers = [CardModel]()
     var wrongAnswers = [CardModel]()
     var studySessionIndex = 0
-    var sessionCorrectPercentage: Double = 0
+    var sessionCorrectPercentage = 0.0
     
-    init(deck: DeckModel, studyCards: [CardModel] = [CardModel](), correctArray: [CardModel] = [CardModel](), wrongArray: [CardModel] = [CardModel]()) {
+    let practisingWeakCards: Bool
+    
+    init(deck: DeckModel, studyCards: [CardModel], correctAnswers: [CardModel] = [CardModel](), wrongAnswers: [CardModel] = [CardModel](), studySessionIndex: Int = 0, sessionCorrectPercentage: Double = 0, practisingWeakCards: Bool) {
         self.deck = deck
         self.studyCards = studyCards
-        self.correctAnswers = correctArray
-        self.wrongAnswers = wrongArray
+        self.correctAnswers = correctAnswers
+        self.wrongAnswers = wrongAnswers
+        self.studySessionIndex = studySessionIndex
+        self.sessionCorrectPercentage = sessionCorrectPercentage
+        self.practisingWeakCards = practisingWeakCards
     }
     
     func progressGame(mark: String) {
@@ -41,7 +46,9 @@ final class StudySessionViewModel {
     func startNewSession() {
         correctAnswers.removeAll()
         wrongAnswers.removeAll()
-        studyCards = deck.cards.shuffled()
+        if !practisingWeakCards {
+            studyCards = deck.cards.shuffled()
+        }
         studySessionIndex = studyCards.count - 1
         sessionCorrectPercentage = 0
         for card in studyCards {
@@ -66,6 +73,19 @@ final class StudySessionViewModel {
         for card in wrongAnswers {
             card.wrongAnswersCount += 1
         }
+    }
+    
+    static func createWeakCardsSession(deck: DeckModel) -> [CardModel] {
+        var weakCards = [CardModel]()
+        for card in deck.cards {
+            if card.timesAppeared > 0 {
+                let correctAnswersPercentage = (100 * card.correctAnswersCount) / card.timesAppeared
+                if correctAnswersPercentage <= 50 {
+                    weakCards.append(card)
+                }
+            }
+        }
+        return weakCards
     }
 }
 
