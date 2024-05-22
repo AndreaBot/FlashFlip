@@ -88,7 +88,8 @@ struct EndView: View {
         .padding(.vertical)
         .onAppear {
             viewModel.deck.sessionsCount += 1
-            print("appear")
+            viewModel.calculateSessionCorrectAnswersPercentage()
+            viewModel.calculateDeckAverageCorrectAnswers()
         }
     }
 }

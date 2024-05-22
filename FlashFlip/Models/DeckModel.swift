@@ -17,6 +17,7 @@ final class DeckModel: Identifiable {
     var cards = [CardModel]()
     
     var sessionsCount = 0
+    var averageCorrectAnswers: Double = 100
     
     init(id: UUID, name: String, folder: FolderModel? = nil) {
         self.id = UUID()

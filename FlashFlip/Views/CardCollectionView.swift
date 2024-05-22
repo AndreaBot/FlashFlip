@@ -47,6 +47,11 @@ struct CardCollectionView: View {
                             Spacer()
                             Text("\(deck.sessionsCount)")
                         }
+                        HStack {
+                            Text("Average result:")
+                            Spacer()
+                            Text(deck.sessionsCount == 0 ? "/" : String(format: "%.2f", deck.averageCorrectAnswers)+"%")
+                        }
                     }
                 }
                 .navigationTitle(deck.name)

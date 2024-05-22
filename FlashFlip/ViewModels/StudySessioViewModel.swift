@@ -15,6 +15,7 @@ final class StudySessionViewModel {
     var correctAnswers = [CardModel]()
     var wrongAnswers = [CardModel]()
     var studySessionIndex = 0
+    var sessionCorrectPercentage: Double = 0
     
     init(deck: DeckModel, studyCards: [CardModel] = [CardModel](), correctArray: [CardModel] = [CardModel](), wrongArray: [CardModel] = [CardModel]()) {
         self.deck = deck
@@ -40,11 +41,20 @@ final class StudySessionViewModel {
         wrongAnswers.removeAll()
         studyCards = deck.cards.shuffled()
         studySessionIndex = studyCards.count - 1
+        sessionCorrectPercentage = 0
         for card in studyCards {
             card.rotationAmount = 0
             card.swipeAmount = 0
             card.showingAnswer = false
         }
+    }
+    
+    func calculateSessionCorrectAnswersPercentage() {
+        sessionCorrectPercentage = Double((100 * correctAnswers.count)/deck.cards.count)
+    }
+    
+    func calculateDeckAverageCorrectAnswers() {
+        deck.averageCorrectAnswers = (deck.averageCorrectAnswers + sessionCorrectPercentage) / 2
     }
 }
 
