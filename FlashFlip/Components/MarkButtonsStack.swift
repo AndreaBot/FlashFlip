@@ -17,7 +17,6 @@ struct MarkButtonsStack: View {
             Spacer()
             
             Button {
-                card.swipeAmount += 180
                 viewModel.progressGame(mark: "correct")
             } label: {
                 Image(systemName: "checkmark")
@@ -31,7 +30,6 @@ struct MarkButtonsStack: View {
             Spacer()
             
             Button {
-                card.swipeAmount += 180
                 viewModel.progressGame(mark: "wrong")
             } label: {
                 Image(systemName: "xmark")

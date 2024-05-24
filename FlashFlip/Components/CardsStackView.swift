@@ -12,13 +12,21 @@ struct CardsStackView: View {
     
     @Binding var viewModel: StudySessionViewModel
     
+    let scale = CGSize(width: 1, height: 1)
+    let smallScale = CGSize(width: 0.8, height: 0.8)
+
+    
     var body: some View {
         VStack {
+            Spacer()
             ZStack {
-                ForEach(0..<viewModel.studyCards.count, id: \.self) { index in
-                    StudySessionCard(card: viewModel.studyCards[index], color: index == (viewModel.studyCards.count - 1) ? Colors.setColor(using: viewModel.deck.folder!.colorName) : Color.gray)
+                ForEach(viewModel.studyCards.indices, id: \.self) { index in
+                    StudySessionCard(card: viewModel.studyCards[index], color: index == viewModel.studySessionIndex ? Colors.setColor(using: viewModel.deck.folder!.colorName) : Color.gray)
+                        .customSwipeAnimation(index: index, currentIndex: viewModel.studySessionIndex, scale: scale, smallScale: smallScale)
+                        .disabled(index != viewModel.studySessionIndex)
                 }
             }
+            Spacer()
             if !viewModel.studyCards.isEmpty {
                 MarkButtonsStack(card: $viewModel.studyCards[viewModel.studySessionIndex], viewModel: $viewModel)
             }

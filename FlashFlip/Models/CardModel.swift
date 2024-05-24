@@ -17,7 +17,6 @@ final class CardModel: Identifiable {
     
     var showingAnswer = false
     var rotationAmount = 0.0
-    var swipeAmount = 0.0
     
     var correctAnswersCount = 0
     var wrongAnswersCount = 0

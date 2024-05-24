@@ -30,7 +30,6 @@ struct StudySessionView: View {
                 if viewModel.studyCards.isEmpty {
                     showingEmpty = true
                 }
-                
             }
             .navigationTitle("Study Session")
         }

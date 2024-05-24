@@ -5,7 +5,7 @@
 //  Created by Andrea Bottino on 21/05/2024.
 //
 
-import Foundation
+import SwiftUI
 
 @Observable
 final class StudySessionViewModel {
@@ -14,32 +14,35 @@ final class StudySessionViewModel {
     var studyCards: [CardModel]
     var correctAnswers = [CardModel]()
     var wrongAnswers = [CardModel]()
-    var studySessionIndex = 0
+    var studySessionIndex: Int {
+        studyCards.count - 1
+    }
     var sessionCorrectPercentage = 0.0
     
     let practisingWeakCards: Bool
     
-    init(deck: DeckModel, studyCards: [CardModel], correctAnswers: [CardModel] = [CardModel](), wrongAnswers: [CardModel] = [CardModel](), studySessionIndex: Int = 0, sessionCorrectPercentage: Double = 0, practisingWeakCards: Bool) {
+    init(deck: DeckModel, studyCards: [CardModel], correctAnswers: [CardModel] = [CardModel](), wrongAnswers: [CardModel] = [CardModel](), sessionCorrectPercentage: Double = 0, practisingWeakCards: Bool) {
         self.deck = deck
         self.studyCards = studyCards
         self.correctAnswers = correctAnswers
         self.wrongAnswers = wrongAnswers
-        self.studySessionIndex = studySessionIndex
+        
         self.sessionCorrectPercentage = sessionCorrectPercentage
         self.practisingWeakCards = practisingWeakCards
     }
     
     func progressGame(mark: String) {
-        if mark == "correct" {
-            correctAnswers.append(studyCards.last!)
-        } else if mark == "wrong" {
-            wrongAnswers.append(studyCards.last!)
-        }
-        studyCards[studySessionIndex].timesAppeared += 1
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-            self.studyCards.remove(at: self.studySessionIndex)
-            self.studySessionIndex -= 1
+        if !studyCards.isEmpty {
+            if mark == "correct" {
+                correctAnswers.append(studyCards[studySessionIndex])
+            } else if mark == "wrong" {
+                wrongAnswers.append(studyCards[studySessionIndex])
+            }
+            studyCards[studySessionIndex].timesAppeared += 1
+            
+            withAnimation(.easeOut(duration: 0.6)) {
+                self.studyCards.remove(at: self.studySessionIndex)
+            }
         }
     }
     
@@ -49,11 +52,9 @@ final class StudySessionViewModel {
         if !practisingWeakCards {
             studyCards = deck.cards.shuffled()
         }
-        studySessionIndex = studyCards.count - 1
         sessionCorrectPercentage = 0
         for card in studyCards {
             card.rotationAmount = 0
-            card.swipeAmount = 0
             card.showingAnswer = false
         }
     }

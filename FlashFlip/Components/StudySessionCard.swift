@@ -29,11 +29,10 @@ struct StudySessionCard: View {
             .rotation3DEffect(
                 .degrees(card.rotationAmount), axis: (x: 0.0, y: 1.0, z: 0.0)
             )
-            .rotation3DEffect(
-                .degrees(card.swipeAmount), axis: (x: 0.0, y: 1.0, z: 0.0), anchor: .trailing)
-        
             .animation(.smooth(extraBounce: 0.3), value: card.rotationAmount)
-            .animation(.linear(duration: 0.6), value: card.swipeAmount)
+            .containerRelativeFrame([.horizontal, .vertical]) { size, axis in
+                size * 0.7
+            }
     }
 }
 
