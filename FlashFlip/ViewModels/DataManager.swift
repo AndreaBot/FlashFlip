@@ -5,7 +5,7 @@
 //  Created by Andrea Bottino on 20/05/2024.
 //
 
-import Foundation
+import SwiftUI
 import SwiftData
 
 struct DataManager {
@@ -51,9 +51,9 @@ struct DataManager {
         guard !cardQuestion.isEmpty && !cardAnswer.isEmpty else {
             return
         }
-        
-        deck.cards.append(CardModel(id: UUID(), question: cardQuestion, answer: cardAnswer))
-        
+        withAnimation {
+            deck.cards.append(CardModel(id: UUID(), question: cardQuestion, answer: cardAnswer))
+        }
         do {
             try context.save()
         } catch {

@@ -8,8 +8,8 @@
 import SwiftUI
 import SwiftData
 
+
 struct CardsCarouselView: View {
-    
     @Environment(\.dismiss) var dismiss
     
     @State var deck: DeckModel
@@ -26,7 +26,6 @@ struct CardsCarouselView: View {
                     VStack {
                         ZStack {
                             ForEach(0..<deck.cards.count, id: \.self) { index in
-                                
                                 if (0..<deck.cards.count).contains(index) {
                                     let widthMod = CGFloat(index - currentIndex) * metrics.size.width
                                     
@@ -35,6 +34,7 @@ struct CardsCarouselView: View {
                                         .scaleEffect(currentIndex == index ? 2 : 1.5)
                                         .offset(x: widthMod * 0.7 + dragOffset, y: 0)
                                         .frame(width: metrics.size.width, height: metrics.size.height * 0.35)
+                                        .transition(.push(from: .bottom))
                                 }
                             }
                             .frame(height: 500)
@@ -44,7 +44,7 @@ struct CardsCarouselView: View {
                         HStack {
                             Button {
                                 withAnimation {
-                                    currentIndex -= 1
+                                    currentIndex = max(0, currentIndex - 1)
                                 }
                             } label: {
                                 Image(systemName: "arrowshape.left.circle")
@@ -58,7 +58,7 @@ struct CardsCarouselView: View {
                             
                             Button {
                                 withAnimation {
-                                    currentIndex += 1
+                                    currentIndex = min(deck.cards.count - 1, currentIndex + 1)
                                 }
                             } label: {
                                 Image(systemName: "arrowshape.right.circle")
@@ -66,6 +66,7 @@ struct CardsCarouselView: View {
                             }
                             .disabled(currentIndex == deck.cards.count - 1)
                         }
+                        
                         VStack(spacing: 20) {
                             Button {
                                 selectedCard = deck.cards[currentIndex]
@@ -76,7 +77,17 @@ struct CardsCarouselView: View {
                             }
                             
                             Button(role: .destructive) {
-                                deck.cards.remove(at: currentIndex)
+                                if (0..<deck.cards.count).contains(currentIndex) {
+                                    withAnimation {
+                                        deck.cards.remove(at: currentIndex)
+                                        
+                                        if currentIndex == deck.cards.count {
+                                            currentIndex -= 1
+                                        }
+                                    
+                                    }
+                                    
+                                }
                             } label: {
                                 Text("Delete Card")
                                     .padding(.horizontal)
@@ -87,7 +98,7 @@ struct CardsCarouselView: View {
                     }
                     .gesture(
                         DragGesture()
-                            .onEnded({ value in
+                            .onEnded { value in
                                 let threshold: CGFloat = 50
                                 if value.translation.width > threshold {
                                     withAnimation {
@@ -98,11 +109,11 @@ struct CardsCarouselView: View {
                                         currentIndex = min(deck.cards.count - 1, currentIndex + 1)
                                     }
                                 }
-                            })
+                            }
                     )
                 } else {
                     ContentUnavailableView {
-                        Label("Your deck is emppty", systemImage: "square.3.layers.3d.slash")
+                        Label("Your deck is empty", systemImage: "square.3.layers.3d.slash")
                     } description: {
                         Text("Tap the + button to start adding cards to the deck")
                     } actions: {
@@ -116,28 +127,29 @@ struct CardsCarouselView: View {
                     }
                 }
             }
-        }
-        .navigationTitle("\(deck.name)")
-        .sheet(item: $selectedCard, content: { cardModel in
-            CardCreationView(deck: deck, context: context, cardIsBeingModified: true, card: cardModel)
-                .presentationDetents([.fraction(0.34)])
-        })
-        .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button {
-                    showCardCreation = true
-                } label: {
-                    Image(systemName: "plus")
-                        .fontWeight(.semibold)
+            .navigationTitle("\(deck.name)")
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        showCardCreation = true
+                    } label: {
+                        Image(systemName: "plus")
+                            .fontWeight(.semibold)
+                    }
                 }
             }
-        }
-        .sheet(isPresented: $showCardCreation) {
-            CardCreationView(deck: deck, context: context, cardIsBeingModified: false)
-                .presentationDetents([.fraction(0.34)])
+            .sheet(item: $selectedCard) { cardModel in
+                CardCreationView(deck: deck, context: context, cardIsBeingModified: true, card: cardModel)
+                    .presentationDetents([.fraction(0.34)])
+            }
+            .sheet(isPresented: $showCardCreation) {
+                CardCreationView(deck: deck, context: context, cardIsBeingModified: false)
+                    .presentationDetents([.fraction(0.34)])
+            }
         }
     }
 }
+
 
 #Preview {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
