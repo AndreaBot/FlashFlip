@@ -33,31 +33,46 @@ struct CardCollectionView: View {
                     Spacer()
                     
                     Form {
-                        NavigationLink("Browse Cards") {
-                            CardsCarouselView(deck: deck, context: context)
+                        Section {
+                            HStack {
+                                Text("Number of sessions:")
+                                Spacer()
+                                Text("\(deck.sessionsCount)")
+                            }
+                            HStack {
+                                Text("Average result:")
+                                Spacer()
+                                Text(deck.sessionsCount == 0 ? "/" : String(format: "%.2f", deck.averageCorrectAnswers)+"%")
+                            }
                         }
-                        .disabled(deck.cards.isEmpty ? true : false)
                         
-                        NavigationLink("Start Study Session") {
-                            StudySessionView(viewModel: StudySessionViewModel(deck: deck, studyCards: deck.cards.shuffled(), practisingWeakCards: false))
+                        Section {
+                            NavigationLink("Browse cards") {
+                                CardsCarouselView(deck: deck, context: context)
+                            }
+                            .disabled(deck.cards.isEmpty)
+                            
+                            Button {
+                                showCardCreation = true
+                            } label: {
+                                Text("Create new cards")
+                            }
+                            .buttonStyle(.borderless)
                         }
-                        .disabled(deck.cards.isEmpty)
                         
-                        NavigationLink("Practice weak cards") {
-                            StudySessionView(viewModel: StudySessionViewModel(deck: deck, studyCards: StudySessionViewModel.createWeakCardsSession(deck: deck), practisingWeakCards: true))
+                        Section {
+                            NavigationLink("Start study session") {
+                                StudySessionView(viewModel: StudySessionViewModel(deck: deck, studyCards: deck.cards.shuffled(), practisingWeakCards: false))
+                            }
+                            .disabled(deck.cards.isEmpty)
+                            
+                            NavigationLink("Practice weak cards") {
+                                StudySessionView(viewModel: StudySessionViewModel(deck: deck, studyCards: StudySessionViewModel.createWeakCardsSession(deck: deck), practisingWeakCards: true))
+                            }
+                            .disabled(deck.cards.isEmpty)
                         }
-                        .disabled(deck.cards.isEmpty)
                         
-                        HStack {
-                            Text("Number of sessions:")
-                            Spacer()
-                            Text("\(deck.sessionsCount)")
-                        }
-                        HStack {
-                            Text("Average result:")
-                            Spacer()
-                            Text(deck.sessionsCount == 0 ? "/" : String(format: "%.2f", deck.averageCorrectAnswers)+"%")
-                        }
+                       
                     }
                 }
                 .navigationTitle(deck.name)

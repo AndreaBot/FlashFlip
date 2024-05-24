@@ -10,97 +10,133 @@ import SwiftData
 
 struct CardsCarouselView: View {
     
+    @Environment(\.dismiss) var dismiss
+    
     @State var deck: DeckModel
     var context: ModelContext
     @State private var currentIndex: Int = 0
     @GestureState private var dragOffset: CGFloat = 0
     @State private var selectedCard: CardModel?
+    @State private var showCardCreation = false
     
     var body: some View {
+        NavigationStack {
             GeometryReader { metrics in
-                VStack {
-                    ZStack {
-                        ForEach(0..<deck.cards.count, id: \.self) { index in
-                            
-                            let widthMod = CGFloat(index - currentIndex) * metrics.size.width
-                            
-                            CardViewComponent(card: deck.cards[index], deck: deck)
-                                .opacity(currentIndex == index ? 1.0 : 0.5)
-                                .scaleEffect(currentIndex == index ? 2 : 1.5)
-                                .offset(x: widthMod * 0.7 + dragOffset, y: 0)
-                                .frame(width: metrics.size.width, height: metrics.size.height * 0.35)
-                        }
-                    }
-                    .frame(height: 500)
-                    
-                    Spacer()
-                    
-                    HStack {
-                        Button {
-                            withAnimation {
-                                currentIndex -= 1
+                if !deck.cards.isEmpty {
+                    VStack {
+                        ZStack {
+                            ForEach(0..<deck.cards.count, id: \.self) { index in
+                                
+                                if (0..<deck.cards.count).contains(index) {
+                                    let widthMod = CGFloat(index - currentIndex) * metrics.size.width
+                                    
+                                    CardViewComponent(card: deck.cards[index], deck: deck)
+                                        .opacity(currentIndex == index ? 1.0 : 0.5)
+                                        .scaleEffect(currentIndex == index ? 2 : 1.5)
+                                        .offset(x: widthMod * 0.7 + dragOffset, y: 0)
+                                        .frame(width: metrics.size.width, height: metrics.size.height * 0.35)
+                                }
                             }
-                        } label: {
-                            Image(systemName: "arrowshape.left.circle")
-                                .font(.largeTitle)
+                            .frame(height: 500)
                         }
-                        .disabled(currentIndex == 0)
-                        
-                        Spacer()
-                        CardStatsViewComponent(card: deck.cards[currentIndex])
                         Spacer()
                         
-                        Button {
-                            withAnimation {
-                                currentIndex += 1
+                        HStack {
+                            Button {
+                                withAnimation {
+                                    currentIndex -= 1
+                                }
+                            } label: {
+                                Image(systemName: "arrowshape.left.circle")
+                                    .font(.largeTitle)
                             }
-                        } label: {
-                            Image(systemName: "arrowshape.right.circle")
-                                .font(.largeTitle)
+                            .disabled(currentIndex == 0)
+                            
+                            Spacer()
+                            CardStatsViewComponent(card: deck.cards[currentIndex])
+                            Spacer()
+                            
+                            Button {
+                                withAnimation {
+                                    currentIndex += 1
+                                }
+                            } label: {
+                                Image(systemName: "arrowshape.right.circle")
+                                    .font(.largeTitle)
+                            }
+                            .disabled(currentIndex == deck.cards.count - 1)
                         }
-                        .disabled(currentIndex == deck.cards.count - 1)
+                        VStack(spacing: 20) {
+                            Button {
+                                selectedCard = deck.cards[currentIndex]
+                            } label: {
+                                Text("Edit Card")
+                                    .padding(.horizontal)
+                                    .font(.title2)
+                            }
+                            
+                            Button(role: .destructive) {
+                                deck.cards.remove(at: currentIndex)
+                            } label: {
+                                Text("Delete Card")
+                                    .padding(.horizontal)
+                                    .font(.title2)
+                            }
+                        }
+                        .buttonStyle(.borderedProminent)
                     }
-                    VStack(spacing: 20) {
+                    .gesture(
+                        DragGesture()
+                            .onEnded({ value in
+                                let threshold: CGFloat = 50
+                                if value.translation.width > threshold {
+                                    withAnimation {
+                                        currentIndex = max(0, currentIndex - 1)
+                                    }
+                                } else if value.translation.width < -threshold {
+                                    withAnimation {
+                                        currentIndex = min(deck.cards.count - 1, currentIndex + 1)
+                                    }
+                                }
+                            })
+                    )
+                } else {
+                    ContentUnavailableView {
+                        Label("Your deck is emppty", systemImage: "square.3.layers.3d.slash")
+                    } description: {
+                        Text("Tap the + button to start adding cards to the deck")
+                    } actions: {
                         Button {
-                            selectedCard = deck.cards[currentIndex]
+                            showCardCreation = true
                         } label: {
-                            Text("Edit Card")
-                                .padding(.horizontal)
-                                .font(.title2)
-                        }
-                        
-                        Button(role: .destructive) {
-                            deck.cards.remove(at: currentIndex)
-                        } label: {
-                            Text("Delete Card")
-                                .padding(.horizontal)
-                                .font(.title2)
+                            Image(systemName: "plus")
+                                .symbolVariant(.circle)
+                                .font(.title)
                         }
                     }
-                    .buttonStyle(.borderedProminent)
                 }
-                .gesture(
-                    DragGesture()
-                        .onEnded({ value in
-                            let threshold: CGFloat = 50
-                            if value.translation.width > threshold {
-                                withAnimation {
-                                    currentIndex = max(0, currentIndex - 1)
-                                }
-                            } else if value.translation.width < -threshold {
-                                withAnimation {
-                                    currentIndex = min(deck.cards.count - 1, currentIndex + 1)
-                                }
-                            }
-                        })
-                )
-                .navigationTitle("\(deck.name)")
-                .sheet(item: $selectedCard, content: { cardModel in
-                    CardCreationView(deck: deck, context: context, cardIsBeingModified: true, card: cardModel)
-                        .presentationDetents([.fraction(0.34)])
-                })
             }
         }
+        .navigationTitle("\(deck.name)")
+        .sheet(item: $selectedCard, content: { cardModel in
+            CardCreationView(deck: deck, context: context, cardIsBeingModified: true, card: cardModel)
+                .presentationDetents([.fraction(0.34)])
+        })
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button {
+                    showCardCreation = true
+                } label: {
+                    Image(systemName: "plus")
+                        .fontWeight(.semibold)
+                }
+            }
+        }
+        .sheet(isPresented: $showCardCreation) {
+            CardCreationView(deck: deck, context: context, cardIsBeingModified: false)
+                .presentationDetents([.fraction(0.34)])
+        }
+    }
 }
 
 #Preview {
