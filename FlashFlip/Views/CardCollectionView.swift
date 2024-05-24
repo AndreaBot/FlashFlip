@@ -18,7 +18,6 @@ struct CardCollectionView: View {
     var context: ModelContext
     
     var body: some View {
-        NavigationStack {
             GeometryReader { metrics in
                 VStack {
                     ScrollView(.horizontal) {
@@ -102,7 +101,6 @@ struct CardCollectionView: View {
                 }
             }
         }
-    }
 }
 
 

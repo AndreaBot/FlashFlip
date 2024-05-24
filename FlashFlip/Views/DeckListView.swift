@@ -19,7 +19,6 @@ struct DeckListView: View {
     var columns = [GridItem(.adaptive(minimum: UIScreen.main.bounds.width/3))]
     
     var body: some View {
-        NavigationStack {
             List {
                 ForEach(folder.decks) { deck in
                     NavigationLink {
@@ -89,7 +88,6 @@ struct DeckListView: View {
                 CreateFolderView(context: context, folder: folder, folderIsBeingModified: true)
             }
         }
-    }
 }
 
 #Preview {

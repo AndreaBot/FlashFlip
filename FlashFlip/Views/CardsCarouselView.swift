@@ -17,7 +17,6 @@ struct CardsCarouselView: View {
     @State private var selectedCard: CardModel?
     
     var body: some View {
-        NavigationStack {
             GeometryReader { metrics in
                 VStack {
                     ZStack {
@@ -100,12 +99,8 @@ struct CardsCarouselView: View {
                     CardCreationView(deck: deck, context: context, cardIsBeingModified: true, card: cardModel)
                         .presentationDetents([.fraction(0.34)])
                 })
-                .onChange(of: currentIndex) { oldValue, newValue in
-                    print(deck.cards[currentIndex].timesAppeared)
-                }
             }
         }
-    }
 }
 
 #Preview {

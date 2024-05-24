@@ -13,7 +13,6 @@ struct StudySessionView: View {
     @State private var showingEmpty = false
     
     var body: some View {
-        NavigationStack {
             ZStack {
                 if showingEmpty {
                     ContentUnavailableView("Yahoo!", systemImage: "party.popper.fill", description: Text("You have no weak cards to practice!\nCards you have answered incorrectly 50% or more of the time will automatically appear here."))
@@ -33,7 +32,6 @@ struct StudySessionView: View {
             }
             .navigationTitle("Study Session")
         }
-    }
 }
 
 //#Preview {
