@@ -38,7 +38,6 @@ final class StudySessionViewModel {
             } else if mark == "wrong" {
                 wrongAnswers.append(studyCards[studySessionIndex])
             }
-            studyCards[studySessionIndex].timesAppeared += 1
             
             withAnimation(.easeOut(duration: 0.6)) {
                 self.studyCards.remove(at: self.studySessionIndex)

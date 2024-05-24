@@ -24,6 +24,7 @@ struct CardCollectionView: View {
                         HStack {
                             ForEach(deck.cards) { card in
                                 CardViewComponent(card: card, deck: deck)
+                                    .padding([.leading, .bottom], 10)
                             }
                         }
                         .frame(height: metrics.size.height * 0.33)

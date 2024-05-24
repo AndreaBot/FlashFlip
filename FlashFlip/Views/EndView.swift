@@ -62,16 +62,17 @@ struct EndView: View {
             .listStyle(PlainListStyle())
             
             VStack {
-                Button {
-                    viewModel.startNewSession()
-                } label: {
-                    Text("Start again")
-                        .font(.title2)
-                        .padding()
-                    
+                if !viewModel.practisingWeakCards {
+                    Button {
+                        viewModel.startNewSession()
+                    } label: {
+                        Text("Start again")
+                            .font(.title2)
+                            .padding()
+                        
+                    }
+                    .buttonStyle(.borderedProminent)
                 }
-                .buttonStyle(.borderedProminent)
-                .disabled(viewModel.practisingWeakCards)
                 
                 Button {
                     dismiss()
