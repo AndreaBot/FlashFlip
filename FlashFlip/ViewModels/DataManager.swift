@@ -39,11 +39,6 @@ struct DataManager {
     static func createNewDeck(_ context: ModelContext, folder: FolderModel, _ deckName: String) {
         withAnimation {
             folder.decks.append(DeckModel(name: deckName, folder: folder))
-            do {
-                try context.save()
-            } catch {
-                print(error.localizedDescription)
-            }
         }
     }
     
@@ -61,11 +56,6 @@ struct DataManager {
         }
         withAnimation {
             deck.cards.append(CardModel(question: cardQuestion, answer: cardAnswer))
-        }
-        do {
-            try context.save()
-        } catch {
-            print(error.localizedDescription)
         }
     }
 }
