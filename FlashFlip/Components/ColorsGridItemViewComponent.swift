@@ -13,11 +13,12 @@ struct ColorsGridItemViewComponent: View {
     
     var body: some View {
         Circle()
+            .frame(width: 45, height: 45)
             .padding(10)
             .foregroundStyle((Colors.setColor(using: iconColor)))
             .overlay {
                 Circle()
-                    .stroke(.mint, lineWidth: isSelected ? 5 : 0)
+                    .stroke(.mint, lineWidth: isSelected ? 4 : 0)
             }
     }
 }

@@ -16,11 +16,11 @@ struct IconsGridItemView: View {
         Image(systemName: iconName)
             .resizable()
             .scaledToFit()
-            .frame(width: 40, height: 40)
+            .frame(width: 45, height: 45)
             .padding(10)
             .overlay {
                 Circle()
-                    .stroke(.mint, lineWidth: isSelected ? 3 : 0)
+                    .stroke(.mint, lineWidth: isSelected ? 4 : 0)
             }
     }
 }
