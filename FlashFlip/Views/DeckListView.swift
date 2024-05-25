@@ -22,30 +22,38 @@ struct DeckListView: View {
     var columns = [GridItem(.adaptive(minimum: UIScreen.main.bounds.width/3))]
     
     var body: some View {
-        List {
-            ForEach(folder.decks.sorted()) { deck in
-                NavigationLink {
-                    DeckView(deck: deck, context: context)
-                } label: {
-                    DeckViewComponent(context: context, deck: deck)
+        VStack {
+            if !folder.decks.isEmpty {
+                List {
+                    ForEach(folder.decks.sorted()) { deck in
+                        NavigationLink {
+                            DeckView(deck: deck, context: context)
+                        } label: {
+                            DeckViewComponent(context: context, deck: deck)
+                        }
+                    }
+                    .onDelete(perform: { indexSet in
+                        for index in indexSet {
+                            DataManager.deleteDeck(context, folder.decks[index])
+                        }
+                    })
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
+                }
+                .listStyle(.plain)
+            } else {
+                ContentUnavailableView {
+                    Label("Your folder is empty", systemImage: "tray")
+                } description: {
+                    Text("Tap the + button to create a new deck")
                 }
             }
-            .onDelete(perform: { indexSet in
-                for index in indexSet {
-                    DataManager.deleteDeck(context, folder.decks[index])
-                }
-            })
-            .listRowSeparator(.hidden)
-            .listRowBackground(Color.clear)
-            
             Button {
                 showingDeckCreation = true
             } label: {
                 CreateElementComponent()
             }
             .buttonStyle(.plain)
-            .listRowSeparator(.hidden)
-            .listRowBackground(Color.clear)
         }
         .navigationTitle(folder.name)
         .toolbar {

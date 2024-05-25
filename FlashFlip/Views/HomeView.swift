@@ -19,30 +19,41 @@ struct HomeView: View {
     
     var body: some View {
         NavigationStack {
-            List {
-                ForEach(allFolders) { folder in
-                    NavigationLink {
-                        DeckListView(context: context, folder: folder)
-                    } label: {
-                        FolderViewComponent(context: context, folder: folder)
+            VStack {
+                if !allFolders.isEmpty {
+                    List {
+                        ForEach(allFolders) { folder in
+                            NavigationLink {
+                                DeckListView(context: context, folder: folder)
+                            } label: {
+                                FolderViewComponent(context: context, folder: folder)
+                            }
+                            .swipeActions{
+                                Button(role: .destructive) {
+                                    DataManager.deleteFolder(context, folder)
+                                } label: {
+                                    Image(systemName: "trash")
+                                }
+                                
+                                Button {
+                                    selectedFolder = folder
+                                } label: {
+                                    Image(systemName: "pencil")
+                                }
+                                .tint(.blue)
+                            }
+                        }
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(Color.clear)
                     }
-                    .swipeActions{
-                        Button(role: .destructive) {
-                            DataManager.deleteFolder(context, folder)
-                        } label: {
-                            Image(systemName: "trash")
-                        }
-                        
-                        Button {
-                            selectedFolder = folder
-                        } label: {
-                            Image(systemName: "pencil")
-                        }
-                        .tint(.blue)
+                    .listStyle(.plain)
+                } else {
+                    ContentUnavailableView {
+                        Label("Nothing to se here...yet.", systemImage: "questionmark.folder")
+                    } description: {
+                        Text("Tap the + button to create a new folder")
                     }
                 }
-                .listRowSeparator(.hidden)
-                .listRowBackground(Color.clear)
                 
                 Button {
                     showingCreateFolderView = true
@@ -50,9 +61,6 @@ struct HomeView: View {
                     CreateElementComponent()
                 }
                 .buttonStyle(.plain)
-                .listRowSeparator(.hidden)
-                .listRowBackground(Color.clear)
-                
             }
             .navigationTitle("Flash Flip")
             .toolbar {

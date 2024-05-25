@@ -63,11 +63,6 @@ struct EndView: View {
 }
 
 //#Preview {
-//    let correctArray = [CardModel(id: UUID(), question: "a", answer: "aa"),
-//                        CardModel(id: UUID(), question: "b", answer: "bb")]
-//    let wrongArray = [CardModel(id: UUID(), question: "1", answer: "11"),
-//                      CardModel(id: UUID(), question: "2", answer: "22")]
-//
 //    @State var viewModel = StudySessionViewModel(deck: DeckModel(id: UUID(), name: "Test"))
 //    return EndView(viewModel: $viewModel)
 //}

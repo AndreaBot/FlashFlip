@@ -19,7 +19,7 @@ struct CreateElementComponent: View {
                 .foregroundStyle(.blue)
             Spacer()
         }
-        .fontWeight(.semibold)
+        .fontWeight(.medium)
         .padding(.top)
         .frame(height: 60)
     }
