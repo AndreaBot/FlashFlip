@@ -21,18 +21,16 @@ struct DeckView: View {
         GeometryReader { metrics in
             VStack {
                 if !deck.cards.isEmpty {
-                    ScrollView(.horizontal) {
-                        HStack {
-                            ForEach(deck.cards) { card in
-                                CardViewComponent(card: card, deck: deck)
-                                    .padding([.leading, .bottom], 10)
-                            }
+                    SmallCardsScrollView(cardsArray: deck.cards, deck: deck)
+                        .containerRelativeFrame(.vertical) { size, axis in
+                            size * 0.33
                         }
-                        .frame(height: metrics.size.height * 0.33)
-                    }
+                       
                 } else {
                     Text("Your deck is currently empty!")
-                        .frame(height: metrics.size.height * 0.33)
+                        .containerRelativeFrame(.vertical) { size, axis in
+                            size * 0.33
+                        }
                 }
                 
                 Spacer()

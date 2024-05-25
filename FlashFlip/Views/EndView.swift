@@ -24,62 +24,30 @@ struct EndView: View {
                     .font(.title3)
             }
             
-            List {
-                Section {
-                    ForEach(viewModel.correctAnswers) { card in
-                        HStack {
-                            Text("\(card.question)")
-                            Spacer()
-                            Text("\(card.answer)")
-                            
-                        }
-                        .padding()
-                        .background(.green)
-                        .clipShape(Capsule())
-                    }
-                    .listRowSeparator(.hidden)
-                } header: {
+            if !viewModel.correctAnswers.isEmpty {
+                VStack {
                     Text("Correct answers")
-                }
-                
-                Section {
-                    ForEach(viewModel.wrongAnswers) { card in
-                        HStack {
-                            Text("\(card.question)")
-                            Spacer()
-                            Text("\(card.answer)")
-                            
-                        }
-                        .padding()
-                        .background(.red)
-                        .clipShape(Capsule())
-                    }
-                    .listRowSeparator(.hidden)
-                } header: {
-                    Text("Wrong answers")
+                    SmallCardsScrollView(cardsArray: viewModel.correctAnswers, deck: viewModel.deck)
                 }
             }
-            .listStyle(PlainListStyle())
+            
+            if !viewModel.wrongAnswers.isEmpty {
+                VStack {
+                    Text("Wrong answers")
+                    SmallCardsScrollView(cardsArray: viewModel.wrongAnswers, deck: viewModel.deck)
+                }
+            }
             
             VStack {
                 if !viewModel.practisingWeakCards {
-                    Button {
+                    Button("Start again") {
                         viewModel.startNewSession()
-                    } label: {
-                        Text("Start again")
-                            .font(.title2)
-                            .padding()
-                        
                     }
                     .buttonStyle(.borderedProminent)
                 }
                 
-                Button {
+                Button("Go back") {
                     dismiss()
-                } label: {
-                    Text("Go Back")
-                        .font(.title2)
-                        .padding()
                 }
                 .buttonStyle(.borderedProminent)
             }
