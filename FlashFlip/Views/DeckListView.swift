@@ -22,7 +22,7 @@ struct DeckListView: View {
             List {
                 ForEach(folder.decks) { deck in
                     NavigationLink {
-                        CardCollectionView(deck: deck, context: context)
+                        DeckView(deck: deck, context: context)
                     } label: {
                         DeckViewComponent(context: context, deck: deck)
                     }

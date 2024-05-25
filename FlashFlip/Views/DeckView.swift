@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-struct CardCollectionView: View {
+struct DeckView: View {
     
     @State var deck: DeckModel
     @State private var newDeckName = ""
@@ -48,7 +48,7 @@ struct CardCollectionView: View {
                         
                         Section {
                             NavigationLink("Browse cards") {
-                                CardsCarouselView(deck: deck, context: context)
+                                CardsBrowser(deck: deck, context: context)
                             }
                             .disabled(deck.cards.isEmpty)
                             
@@ -120,9 +120,9 @@ struct CardCollectionView: View {
 }
 
 
-#Preview {
-    let config = ModelConfiguration(isStoredInMemoryOnly: true)
-    let container = try! ModelContainer(for: FolderModel.self, configurations: config)
-    
-    return CardCollectionView(deck: DeckModel(id: UUID(), name: "Test"), context: ModelContext(container))
-}
+//#Preview {
+//    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+//    let container = try! ModelContainer(for: FolderModel.self, configurations: config)
+//    
+//    return DeckView(deck: DeckModel(id: UUID(), name: "Test"), context: ModelContext(container))
+//}
