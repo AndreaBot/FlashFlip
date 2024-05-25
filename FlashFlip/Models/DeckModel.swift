@@ -17,7 +17,7 @@ final class DeckModel: Identifiable, Comparable {
     let id: Double
     var name: String
     var folder: FolderModel?
-    var cards = [CardModel]()
+    @Relationship(deleteRule:.cascade) var cards = [CardModel]()
     
     var sessionsCount = 0
     var averageCorrectAnswers: Double = 100

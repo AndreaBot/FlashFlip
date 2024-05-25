@@ -10,10 +10,13 @@ import SwiftData
 
 struct DeckView: View {
     
+    @Environment(\.dismiss) var dismiss
+    
     @State var deck: DeckModel
     @State private var newDeckName = ""
     @State private var showCardCreation = false
     @State private var showDeckNameEditing = false
+    @State private var showingDeleteConfirmation = false
     
     var context: ModelContext
     
@@ -25,7 +28,7 @@ struct DeckView: View {
                         .containerRelativeFrame(.vertical) { size, axis in
                             size * 0.33
                         }
-                       
+                    
                 } else {
                     Text("Your deck is currently empty!")
                         .containerRelativeFrame(.vertical) { size, axis in
@@ -78,25 +81,44 @@ struct DeckView: View {
             }
             .navigationTitle(deck.name)
             .toolbar {
-                ToolbarItemGroup(placement: .confirmationAction) {
-                    Button {
-                        showDeckNameEditing = true
+                ToolbarItem(placement: .confirmationAction) {
+                    Menu {
+                        Button {
+                            showDeckNameEditing = true
+                        } label: {
+                            Label("Edit deck name", systemImage: "pencil")
+                        }
+                        
+                        Button {
+                            showCardCreation = true
+                        } label: {
+                            Label("Add cards", systemImage: "plus")
+                        }
+                        
+                        Button(role: .destructive) {
+                            showingDeleteConfirmation = true
+                        } label: {
+                            Label("Delete deck", systemImage: "trash")
+                        }
                     } label: {
-                        Image(systemName: "pencil")
+                        Image(systemName: "ellipsis")
                             .fontWeight(.semibold)
                     }
-                    Button {
-                        showCardCreation = true
-                    } label: {
-                        Image(systemName: "plus")
-                            .fontWeight(.semibold)
-                    }
+                    
                 }
             }
             .sheet(isPresented: $showCardCreation) {
                 CardCreationView(deck: deck, context: context, cardIsBeingModified: false)
                     .presentationDetents([.fraction(0.34)])
             }
+            .alert("Attention", isPresented: $showingDeleteConfirmation, actions: {
+                Button("Delete", role: .destructive) {
+                    DataManager.deleteDeck(context, deck)
+                    dismiss()
+                }
+            }, message: {
+                Text("Do you wish to delete this folder and all of its cards?")
+            })
             .alert("Edit Deck name", isPresented: $showDeckNameEditing) {
                 TextField("Type the new name", text: $newDeckName)
                     .foregroundStyle(.black)
@@ -125,5 +147,6 @@ struct DeckView: View {
 //    let config = ModelConfiguration(isStoredInMemoryOnly: true)
 //    let container = try! ModelContainer(for: FolderModel.self, configurations: config)
 //
-//    return DeckView(deck: DeckModel(id: UUID(), name: "Test"), context: ModelContext(container))
+//    return DeckView(deck: DeckModel(name: "test"), context: ModelContext(container))
 //}
+

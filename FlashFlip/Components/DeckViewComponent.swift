@@ -52,7 +52,7 @@ struct DeckViewComponent: View {
             .containerRelativeFrame(.horizontal) { size, axis in
                 size * 0.9
             }
-            .background(Colors.setColor(using: deck.folder!.colorName))
+            .background(Colors.setColor(using: deck.folder?.colorName ?? "blue"))
             .clipShape(RoundedRectangle(cornerRadius: 20))
         }
     }

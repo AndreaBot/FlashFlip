@@ -14,11 +14,15 @@ struct DataManager {
     
     static func createFolder(_ context: ModelContext, _ newFolderName: String, _ newFolderIconName: String, _ newFolderColorName: String) {
         let newFolder = FolderModel(name: newFolderName, iconName: newFolderIconName, colorName: newFolderColorName)
-        context.insert(newFolder)
+        withAnimation {
+            context.insert(newFolder)
+        }
     }
     
     static func deleteFolder(_ context: ModelContext, _ folder: FolderModel) {
-        context.delete(folder)
+        withAnimation {
+            context.delete(folder)
+        }
     }
     
     static func confirmChanges(_ folder: FolderModel?, _ newFolderName: String, _ newFolderIconName: String, _ newFolderColorName: String) {
@@ -33,16 +37,20 @@ struct DataManager {
     //MARK: - Decks management
     
     static func createNewDeck(_ context: ModelContext, folder: FolderModel, _ deckName: String) {
-        folder.decks.append(DeckModel(name: deckName, folder: folder))
-        do {
-            try context.save()
-        } catch {
-            print(error.localizedDescription)
+        withAnimation {
+            folder.decks.append(DeckModel(name: deckName, folder: folder))
+            do {
+                try context.save()
+            } catch {
+                print(error.localizedDescription)
+            }
         }
     }
     
     static func deleteDeck(_ context: ModelContext, _ deck: DeckModel) {
-        context.delete(deck)
+        withAnimation {
+            context.delete(deck)
+        }
     }
     
     //MARK: - Cards management

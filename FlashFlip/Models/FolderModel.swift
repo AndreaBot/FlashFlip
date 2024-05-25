@@ -15,7 +15,7 @@ final class FolderModel: Identifiable {
     var name: String
     var iconName: String
     var colorName: String
-    var decks = [DeckModel]()
+    @Relationship(deleteRule:.cascade) var decks = [DeckModel]()
     
     init(id: Double = Date.timeIntervalSinceReferenceDate, name: String, iconName: String, colorName: String) {
         self.id = id
