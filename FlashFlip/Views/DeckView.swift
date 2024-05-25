@@ -78,6 +78,8 @@ struct DeckView: View {
                         .disabled(deck.cards.isEmpty)
                     }
                 }
+                .scrollContentBackground(.hidden)
+                .background(Colors.setColor(using: deck.folder!.colorName).opacity(0.7))
             }
             .navigationTitle(deck.name)
             .toolbar {

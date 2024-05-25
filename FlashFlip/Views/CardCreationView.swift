@@ -25,39 +25,35 @@ struct CardCreationView: View {
     
     var body: some View {
         NavigationStack {
-            ZStack {
-                Color.secondary
-                    .ignoresSafeArea()
+            VStack {
+                TextField("Card question", text: $cardQuestion)
+                    .focused($txtIsFocused)
+                    .padding()
+                    .background(.background)
+                    .clipShape(Capsule())
+                    .multilineTextAlignment(.center)
                 
-                VStack {
-                    TextField("Card Question", text: $cardQuestion)
-                        .focused($txtIsFocused)
-                        .padding()
-                        .background(.background)
-                        .clipShape(Capsule())
-                        .multilineTextAlignment(.center)
-                    
-                    TextField("Card Answer", text: $cardAnswer)
-                        .padding()
-                        .background(.background)
-                        .clipShape(Capsule())
-                        .multilineTextAlignment(.center)
-                    
-                    Spacer()
-                    
-                    Button {
-                        cardIsBeingModified ? updateCard() : DataManager.createNewCard(cardQuestion, cardAnswer, deck, context)
-                        cardQuestion = ""
-                        cardAnswer = ""
-                        txtIsFocused = true
-                    } label: {
-                        Text(cardIsBeingModified ? "Confirm Changes" : "Create card")
-                            .frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(.borderedProminent)
+                TextField("Card answer", text: $cardAnswer)
+                    .padding()
+                    .background(.background)
+                    .clipShape(Capsule())
+                    .multilineTextAlignment(.center)
+                
+                Spacer()
+                
+                Button {
+                    cardIsBeingModified ? updateCard() : DataManager.createNewCard(cardQuestion, cardAnswer, deck, context)
+                    cardQuestion = ""
+                    cardAnswer = ""
+                    txtIsFocused = true
+                } label: {
+                    Text(cardIsBeingModified ? "Confirm changes" : "Create card")
+                        .frame(maxWidth: .infinity)
                 }
-                .padding()
+                .buttonStyle(.borderedProminent)
             }
+            .padding()
+            .background(.ultraThickMaterial)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Done") {
