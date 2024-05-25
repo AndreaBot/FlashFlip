@@ -20,7 +20,7 @@ struct DeckListView: View {
     
     var body: some View {
             List {
-                ForEach(folder.decks) { deck in
+                ForEach(folder.decks.sorted()) { deck in
                     NavigationLink {
                         DeckView(deck: deck, context: context)
                     } label: {
@@ -94,5 +94,5 @@ struct DeckListView: View {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
     let container = try! ModelContainer(for: FolderModel.self, configurations: config)
     
-    return DeckListView(context: ModelContext(container), folder: FolderModel(id: UUID(), name: "Test", iconName: "brain", colorName: "blue"))
+    return DeckListView(context: ModelContext(container), folder: FolderModel(name: "Test", iconName: "brain", colorName: "blue"))
 }

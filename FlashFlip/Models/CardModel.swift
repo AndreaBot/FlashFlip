@@ -9,9 +9,12 @@ import Foundation
 import SwiftData
 
 @Model
-final class CardModel: Identifiable {
+final class CardModel: Identifiable, Comparable {
+    static func < (lhs: CardModel, rhs: CardModel) -> Bool {
+        lhs.id < rhs.id
+    }
     
-    let id: UUID
+    let id: Double
     var question: String
     var answer: String
     
@@ -24,8 +27,8 @@ final class CardModel: Identifiable {
         correctAnswersCount + wrongAnswersCount
     }
     
-    init(id: UUID, question: String, answer: String) {
-        self.id = UUID()
+    init(id: Double = Date.timeIntervalSinceReferenceDate, question: String, answer: String) {
+        self.id = id
         self.question = question
         self.answer = answer
     }

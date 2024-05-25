@@ -10,10 +10,10 @@ import SwiftData
 
 struct DataManager {
     
-    //MARK: - Folders managment
+    //MARK: - Folders management
     
     static func createFolder(_ context: ModelContext, _ newFolderName: String, _ newFolderIconName: String, _ newFolderColorName: String) {
-        let newFolder = FolderModel(id: UUID(), name: newFolderName, iconName: newFolderIconName, colorName: newFolderColorName)
+        let newFolder = FolderModel(name: newFolderName, iconName: newFolderIconName, colorName: newFolderColorName)
         context.insert(newFolder)
     }
     
@@ -30,10 +30,10 @@ struct DataManager {
     }
     
     
-    //MARK: - Decks managment
+    //MARK: - Decks management
     
     static func createNewDeck(_ context: ModelContext, folder: FolderModel, _ deckName: String) {
-        folder.decks.append(DeckModel(id: UUID(), name: deckName, folder: folder))
+        folder.decks.append(DeckModel(name: deckName, folder: folder))
         do {
             try context.save()
         } catch {
@@ -45,14 +45,14 @@ struct DataManager {
         context.delete(deck)
     }
     
-    //MARK: - Cards managment
+    //MARK: - Cards management
     
     static func createNewCard(_ cardQuestion: String, _ cardAnswer: String, _ deck: DeckModel, _ context: ModelContext ) {
         guard !cardQuestion.isEmpty && !cardAnswer.isEmpty else {
             return
         }
         withAnimation {
-            deck.cards.append(CardModel(id: UUID(), question: cardQuestion, answer: cardAnswer))
+            deck.cards.append(CardModel(question: cardQuestion, answer: cardAnswer))
         }
         do {
             try context.save()

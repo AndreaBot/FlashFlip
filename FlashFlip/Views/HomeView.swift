@@ -11,7 +11,7 @@ import SwiftData
 struct HomeView: View {
     
     @Environment(\.modelContext) private var context
-    @Query var allFolders: [FolderModel]
+    @Query(sort: \FolderModel.id) var allFolders: [FolderModel]
     
     @State private var showingCreateFolderView = false
     @State private var selectedFolder: FolderModel?

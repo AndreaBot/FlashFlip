@@ -9,9 +9,12 @@ import Foundation
 import SwiftData
 
 @Model
-final class DeckModel: Identifiable {
+final class DeckModel: Identifiable, Comparable {
+    static func < (lhs: DeckModel, rhs: DeckModel) -> Bool {
+        lhs.id < rhs.id
+    }
     
-    let id: UUID
+    let id: Double
     var name: String
     var folder: FolderModel?
     var cards = [CardModel]()
@@ -19,8 +22,8 @@ final class DeckModel: Identifiable {
     var sessionsCount = 0
     var averageCorrectAnswers: Double = 100
     
-    init(id: UUID, name: String, folder: FolderModel? = nil) {
-        self.id = UUID()
+    init(id: Double = Date.timeIntervalSinceReferenceDate, name: String, folder: FolderModel? = nil) {
+        self.id = id
         self.name = name
         self.folder = folder
     }

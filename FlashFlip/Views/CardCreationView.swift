@@ -87,5 +87,5 @@ struct CardCreationView: View {
 #Preview {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
     let container = try! ModelContainer(for: FolderModel.self, configurations: config)
-    return CardCreationView(deck: DeckModel(id: UUID(), name: "Test"), context: ModelContext(container), cardIsBeingModified: false)
+    return CardCreationView(deck: DeckModel(name: "Test"), context: ModelContext(container), cardIsBeingModified: false)
 }

@@ -58,8 +58,8 @@ struct DeckViewComponent: View {
     }
 }
 
-//#Preview {
-//    let config = ModelConfiguration(isStoredInMemoryOnly: true)
-//    let container = try! ModelContainer(for: FolderModel.self, configurations: config)
-//    return DeckViewComponent(context: ModelContext(container), deck: DeckModel(id: UUID(), name: "Test"))
-//}
+#Preview {
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: FolderModel.self, configurations: config)
+    return DeckViewComponent(context: ModelContext(container), deck: DeckModel(name: "Test"))
+}

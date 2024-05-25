@@ -11,14 +11,14 @@ import SwiftData
 @Model
 final class FolderModel: Identifiable {
     
-    var id: UUID
+    var id: Double
     var name: String
     var iconName: String
     var colorName: String
     var decks = [DeckModel]()
     
-    init(id: UUID, name: String, iconName: String, colorName: String) {
-        self.id = UUID()
+    init(id: Double = Date.timeIntervalSinceReferenceDate, name: String, iconName: String, colorName: String) {
+        self.id = id
         self.name = name
         self.iconName = iconName
         self.colorName = colorName

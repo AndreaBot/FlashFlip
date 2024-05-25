@@ -34,5 +34,5 @@ struct CardStatsViewComponent: View {
 }
 
 #Preview {
-    CardStatsViewComponent(card: CardModel(id: UUID(), question: "test1", answer: "test2"))
+    CardStatsViewComponent(card: CardModel(question: "test1", answer: "test2"))
 }

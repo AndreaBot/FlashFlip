@@ -37,5 +37,5 @@ struct StudySessionCard: View {
 }
 
 #Preview {
-    return StudySessionCard(card: CardModel(id: UUID(), question: "1", answer: "1"), color: .blue)
+    return StudySessionCard(card: CardModel(question: "1", answer: "1"), color: .blue)
 }

@@ -5,6 +5,7 @@
 //  Created by Andrea Bottino on 25/05/2024.
 //
 
+
 import SwiftData
 import SwiftUI
 
@@ -24,7 +25,7 @@ struct CardCarouselView: View {
                         if (0..<deck.cards.count).contains(index) {
                             let widthMod = CGFloat(index - currentIndex) * metrics.size.width
                             
-                            CardViewComponent(card: deck.cards[index], deck: deck)
+                            CardViewComponent(card: deck.cards.sorted()[index], deck: deck)
                                 .opacity(currentIndex == index ? 1.0 : 0.5)
                                 .scaleEffect(currentIndex == index ? 2 : 1.5)
                                 .offset(x: widthMod * 0.7 + dragOffset, y: 0)

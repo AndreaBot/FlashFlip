@@ -21,7 +21,7 @@ struct DeckView: View {
         GeometryReader { metrics in
             VStack {
                 if !deck.cards.isEmpty {
-                    SmallCardsScrollView(cardsArray: deck.cards, deck: deck)
+                    SmallCardsScrollView(cardsArray: deck.cards.sorted(), deck: deck)
                         .containerRelativeFrame(.vertical) { size, axis in
                             size * 0.33
                         }

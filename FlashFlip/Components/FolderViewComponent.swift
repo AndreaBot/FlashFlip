@@ -42,9 +42,9 @@ struct FolderViewComponent: View {
     }
 }
 
-#Preview {
-    let config = ModelConfiguration(isStoredInMemoryOnly: true)
-    let container = try! ModelContainer(for: FolderModel.self, configurations: config)
-    
-    return FolderViewComponent(context: ModelContext(container), folder: FolderModel(id: UUID(), name: "Swift", iconName: "swift", colorName: "orange"))
-}
+//#Preview {
+//    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+//    let container = try! ModelContainer(for: FolderModel.self, configurations: config)
+//    
+//    return FolderViewComponent(context: ModelContext(container), folder: FolderModel(id: UUID(), name: "Swift", iconName: "swift", colorName: "orange"))
+//}

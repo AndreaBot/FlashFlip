@@ -10,8 +10,8 @@ import SwiftData
 
 
 struct CardsBrowser: View {
-    @Environment(\.dismiss) var dismiss
     
+    @Environment(\.dismiss) var dismiss
     @State var deck: DeckModel
     var context: ModelContext
     @State private var showCardCreation = false
