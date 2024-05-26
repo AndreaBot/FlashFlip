@@ -73,6 +73,9 @@ struct CreateFolderView: View {
             .onAppear {
                 if folderIsBeingModified {
                     showCurrentFolderDetails()
+                    txtFieldFocused = false
+                } else {
+                    txtFieldFocused = true
                 }
             }
         }

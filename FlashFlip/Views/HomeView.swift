@@ -15,6 +15,7 @@ struct HomeView: View {
     
     @State private var showingCreateFolderView = false
     @State private var showingFolderDeleteConfirmation = false
+    @State private var showingDatabaseClearingConfimration = false
     @State private var selectedFolder: FolderModel?
     @State private var swipedFolder: FolderModel?
     
@@ -67,6 +68,15 @@ struct HomeView: View {
             }
             .navigationTitle("Flash Flip")
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        showingDatabaseClearingConfimration = true
+                    } label: {
+                        Image(systemName: "square.3.layers.3d.down.right.slash")
+                            .fontWeight(.semibold)
+                    }
+                    .disabled(allFolders.isEmpty)
+                }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         showingCreateFolderView = true
@@ -82,6 +92,13 @@ struct HomeView: View {
                 }
             } message: {
                 Text("Do you wish to delete this folder and all of its content?")
+            }
+            .alert("Attention", isPresented: $showingDatabaseClearingConfimration) {
+                Button("Delete", role: .destructive) {
+                    DataManager.clearDatabase(context: context, allFolders: allFolders)
+                }
+            } message: {
+                Text("Are you sure you want to clear all data? This action cannot be undone!")
             }
         }
         .fullScreenCover(isPresented: $showingCreateFolderView){

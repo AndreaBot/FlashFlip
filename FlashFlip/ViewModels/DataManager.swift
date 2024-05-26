@@ -10,6 +10,12 @@ import SwiftData
 
 struct DataManager {
     
+    static func clearDatabase(context: ModelContext, allFolders: [FolderModel]) {
+        for i in allFolders.indices {
+            context.delete(allFolders[i])
+        }
+    }
+    
     //MARK: - Folders management
     
     static func createFolder(_ context: ModelContext, _ newFolderName: String, _ newFolderIconName: String, _ newFolderColorName: String) {
