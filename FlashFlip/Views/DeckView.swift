@@ -113,14 +113,14 @@ struct DeckView: View {
                 CardCreationView(deck: deck, context: context, cardIsBeingModified: false)
                     .presentationDetents([.fraction(0.34)])
             }
-            .alert("Attention", isPresented: $showingDeleteConfirmation, actions: {
+            .alert("Attention", isPresented: $showingDeleteConfirmation) {
                 Button("Delete", role: .destructive) {
                     DataManager.deleteDeck(context, deck)
                     dismiss()
                 }
-            }, message: {
+            } message: {
                 Text("Do you wish to delete this folder and all of its cards?")
-            })
+            }
             .alert("Edit Deck name", isPresented: $showDeckNameEditing) {
                 TextField("Type the new name", text: $newDeckName)
                     .foregroundStyle(.black)

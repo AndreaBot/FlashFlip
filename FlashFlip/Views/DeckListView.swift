@@ -15,7 +15,10 @@ struct DeckListView: View {
     @State private var deckName = ""
     @State private var showingDeckCreation = false
     @State private var showFolderEditing = false
-    @State private var showingDeleteConfirmation = false
+    @State private var showingFolderDeleteConfirmation = false
+    @State private var showingDeckDeleteConfirmation = false
+    
+    @State private var swipedDeck: DeckModel?
     
     var context: ModelContext
     var folder: FolderModel
@@ -31,12 +34,16 @@ struct DeckListView: View {
                         } label: {
                             DeckViewComponent(context: context, deck: deck)
                         }
-                    }
-                    .onDelete(perform: { indexSet in
-                        for index in indexSet {
-                            DataManager.deleteDeck(context, folder.decks[index])
+                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                            Button {
+                                swipedDeck = deck
+                                showingDeckDeleteConfirmation = true
+                            } label: {
+                                Image(systemName: "trash")
+                            }
+                            .tint(.red)
                         }
-                    })
+                    }
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
                 }
@@ -72,7 +79,7 @@ struct DeckListView: View {
                     }
                     
                     Button(role: .destructive) {
-                        showingDeleteConfirmation = true
+                        showingFolderDeleteConfirmation = true
                     } label: {
                         Label("Delete folder", systemImage: "trash")
                     }
@@ -87,14 +94,21 @@ struct DeckListView: View {
                     .fontWeight(.semibold)
             }
         }
-        .alert("Attention", isPresented: $showingDeleteConfirmation, actions: {
+        .alert("Attention", isPresented: $showingFolderDeleteConfirmation) {
             Button("Delete", role: .destructive) {
                 DataManager.deleteFolder(context, folder)
                 dismiss()
             }
-        }, message: {
+        } message: {
+            Text("Do you wish to delete this deck and all of its content?")
+        }
+        .alert("Attention", isPresented: $showingDeckDeleteConfirmation) {
+            Button("Delete", role: .destructive) {
+                DataManager.deleteDeck(context, swipedDeck!)
+            }
+        } message: {
             Text("Do you wish to delete this folder and all of its content?")
-        })
+        }
         .alert("Create New Deck", isPresented: $showingDeckCreation) {
             TextField("New Deck Name", text: $deckName)
                 .onSubmit {

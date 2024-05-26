@@ -14,8 +14,9 @@ struct HomeView: View {
     @Query(sort: \FolderModel.id) var allFolders: [FolderModel]
     
     @State private var showingCreateFolderView = false
+    @State private var showingFolderDeleteConfirmation = false
     @State private var selectedFolder: FolderModel?
-    
+    @State private var swipedFolder: FolderModel?
     
     var body: some View {
         NavigationStack {
@@ -29,11 +30,13 @@ struct HomeView: View {
                                 FolderViewComponent(context: context, folder: folder)
                             }
                             .swipeActions{
-                                Button(role: .destructive) {
-                                    DataManager.deleteFolder(context, folder)
+                                Button {
+                                    swipedFolder = folder
+                                    showingFolderDeleteConfirmation = true
                                 } label: {
                                     Image(systemName: "trash")
                                 }
+                                .tint(.red)
                                 
                                 Button {
                                     selectedFolder = folder
@@ -72,6 +75,13 @@ struct HomeView: View {
                             .fontWeight(.semibold)
                     }
                 }
+            }
+            .alert("Attention", isPresented: $showingFolderDeleteConfirmation) {
+                Button("Delete", role: .destructive) {
+                    DataManager.deleteFolder(context, swipedFolder!)
+                }
+            } message: {
+                Text("Do you wish to delete this folder and all of its content?")
             }
         }
         .fullScreenCover(isPresented: $showingCreateFolderView){
