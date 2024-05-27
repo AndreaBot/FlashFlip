@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum Mark {
-    case correct, wrong
+    case correct, wrong, neutral
 }
 
 @Observable
@@ -47,6 +47,7 @@ final class StudySessionViewModel {
             withAnimation(.easeOut(duration: 0.6)) {
                 self.studyCards.remove(at: self.studySessionIndex)
             }
+            mark = .neutral
         }
     }
     

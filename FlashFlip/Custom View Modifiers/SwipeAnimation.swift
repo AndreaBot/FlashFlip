@@ -21,6 +21,7 @@ struct SwipeAnimation: ViewModifier {
             .transition(.push(from: edge))
             .scaleEffect(index == currentIndex ? scale : smallScale)
             .rotationEffect(.degrees(index == currentIndex ? 0 : -10))
+        
     }
 }
 
@@ -29,4 +30,5 @@ extension View {
         modifier(SwipeAnimation(index: index, currentIndex: currentIndex, scale: scale, smallScale: smallScale, edge: edge))
     }
 }
+
 

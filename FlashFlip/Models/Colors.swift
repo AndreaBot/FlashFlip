@@ -42,4 +42,15 @@ struct Colors {
             return .gray
         }
     }
+    
+    static func setColor(using mark: Mark, folderColor: String) -> Color {
+        switch mark {
+        case .correct:
+            return .green
+        case .wrong:
+            return .red
+        case .neutral:
+            return Colors.setColor(using: folderColor)
+        }
+    }
 }
