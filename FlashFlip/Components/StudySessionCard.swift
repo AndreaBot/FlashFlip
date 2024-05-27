@@ -10,9 +10,12 @@ import SwiftUI
 struct StudySessionCard: View {
     
     let card: CardModel
+    let color: Color
     
     var body: some View {
         RoundedRectangle(cornerRadius: 20)
+            .fill(color)
+            .strokeBorder(.secondary, lineWidth: 8)
             .onTapGesture {
                 card.rotationAmount += 180
                 card.showingAnswer.toggle()
@@ -36,5 +39,5 @@ struct StudySessionCard: View {
 }
 
 //#Preview {
-//    return StudySessionCard(card: CardModel(question: "1", answer: "1"), color: .blue)
+//    return StudySessionCard(card: CardModel(question: "A", answer: "B"))
 //}
