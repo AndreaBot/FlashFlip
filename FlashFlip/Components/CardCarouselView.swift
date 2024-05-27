@@ -20,6 +20,7 @@ struct CardCarouselView: View {
     var body: some View {
         GeometryReader { metrics in
             VStack {
+                Spacer()
                 ZStack {
                     ForEach(0..<deck.cards.count, id: \.self) { index in
                         if (0..<deck.cards.count).contains(index) {
@@ -33,7 +34,7 @@ struct CardCarouselView: View {
                                 .transition(.push(from: .bottom))
                         }
                     }
-                    .frame(height: 500)
+                    .frame(height: metrics.size.height * 0.6)
                 }
                 Spacer()
                 
@@ -65,7 +66,7 @@ struct CardCarouselView: View {
                     .disabled(currentIndex == deck.cards.count - 1)
                 }
                 
-                VStack(spacing: 20) {
+                VStack {
                     Button {
                         selectedCard = deck.cards[currentIndex]
                     } label: {
