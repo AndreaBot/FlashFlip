@@ -15,6 +15,7 @@ struct CardCarouselView: View {
     @State private var currentIndex = 0
     @Binding var deck: DeckModel
     @State private var selectedCard: CardModel?
+    @State private var cardToDelete: CardModel?
     @GestureState private var dragOffset: CGFloat = 0
     
     var body: some View {
@@ -78,7 +79,13 @@ struct CardCarouselView: View {
                     Button(role: .destructive) {
                         if (0..<deck.cards.count).contains(currentIndex) {
                             withAnimation {
-                                deck.cards.remove(at: currentIndex)
+                                
+                                cardToDelete = deck.cards.sorted()[currentIndex]
+                                if let deletionIndex = deck.cards.firstIndex(where: { cardModel in
+                                    cardModel.id == cardToDelete?.id
+                                }) {
+                                    deck.cards.remove(at: deletionIndex)
+                                }
                                 
                                 if currentIndex == deck.cards.count {
                                     currentIndex -= 1
@@ -94,8 +101,7 @@ struct CardCarouselView: View {
                     }
                 }
                 .buttonStyle(.borderedProminent)
-            }
-            .sheet(item: $selectedCard) { cardModel in
+            }            .sheet(item: $selectedCard) { cardModel in
                 CardCreationView(deck: deck, context: context, cardIsBeingModified: true, card: cardModel)
                     .presentationDetents([.fraction(0.34)])
             }
