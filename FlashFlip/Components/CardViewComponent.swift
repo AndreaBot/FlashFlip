@@ -21,13 +21,14 @@ struct CardViewComponent: View {
             
             VStack(alignment: .leading) {
                 Text(card.question)
-                    .font(.title)
-                    .fontWeight(.bold)
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                    .minimumScaleFactor(0.2)
                 
                 Spacer()
                 Text(card.answer)
-                    .font(.title3)
-                    .fontWeight(.medium)
+                    .font(.footnote)
+                    .minimumScaleFactor(0.2)
             }
             .padding()
         }

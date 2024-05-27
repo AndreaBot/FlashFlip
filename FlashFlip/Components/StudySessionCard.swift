@@ -27,6 +27,9 @@ struct StudySessionCard: View {
                     .rotation3DEffect(
                         .degrees(-card.rotationAmount), axis: (x: 0.0, y: 1.0, z: 0.0)
                     )
+                    .padding()
+                    .minimumScaleFactor(0.2)
+                    .allowsHitTesting(false)
             }
             .rotation3DEffect(
                 .degrees(card.rotationAmount), axis: (x: 0.0, y: 1.0, z: 0.0)

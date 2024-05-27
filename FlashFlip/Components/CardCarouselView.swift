@@ -51,7 +51,7 @@ struct CardCarouselView: View {
                     
                     Spacer()
                     if (0..<deck.cards.count).contains(currentIndex) {
-                        CardStatsViewComponent(card: deck.cards[currentIndex])
+                        CardStatsViewComponent(card: deck.cards.sorted()[currentIndex])
                     }
                     Spacer()
                     
