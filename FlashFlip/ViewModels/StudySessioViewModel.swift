@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+enum Mark {
+    case correct, wrong
+}
+
 @Observable
 final class StudySessionViewModel {
     
@@ -18,10 +22,11 @@ final class StudySessionViewModel {
         studyCards.count - 1
     }
     var sessionCorrectPercentage = 0.0
+    var mark: Mark
     
     let practisingWeakCards: Bool
     
-    init(deck: DeckModel, studyCards: [CardModel], correctAnswers: [CardModel] = [CardModel](), wrongAnswers: [CardModel] = [CardModel](), sessionCorrectPercentage: Double = 0, practisingWeakCards: Bool) {
+    init(deck: DeckModel, studyCards: [CardModel], correctAnswers: [CardModel] = [CardModel](), wrongAnswers: [CardModel] = [CardModel](), sessionCorrectPercentage: Double = 0, practisingWeakCards: Bool, mark: Mark) {
         self.deck = deck
         self.studyCards = studyCards
         self.correctAnswers = correctAnswers
@@ -29,16 +34,16 @@ final class StudySessionViewModel {
         
         self.sessionCorrectPercentage = sessionCorrectPercentage
         self.practisingWeakCards = practisingWeakCards
+        self.mark = mark
     }
     
-    func progressGame(mark: String) {
+    func progressGame() {
         if !studyCards.isEmpty {
-            if mark == "correct" {
+            if mark == .correct {
                 correctAnswers.append(studyCards[studySessionIndex])
-            } else if mark == "wrong" {
+            } else if mark == .wrong {
                 wrongAnswers.append(studyCards[studySessionIndex])
             }
-            
             withAnimation(.easeOut(duration: 0.6)) {
                 self.studyCards.remove(at: self.studySessionIndex)
             }

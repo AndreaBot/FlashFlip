@@ -13,20 +13,20 @@ struct SwipeAnimation: ViewModifier {
     let currentIndex: Int
     let scale: CGSize
     let smallScale: CGSize
+    let edge: Edge
     
     func body(content: Content) -> some View {
         content
             .offset(x: index == currentIndex ? 0 : -45, y: 0)
-            .transition(.slide.combined(with: .move(edge: .trailing)).combined(with: .opacity))
+            .transition(.push(from: edge))
             .scaleEffect(index == currentIndex ? scale : smallScale)
             .rotationEffect(.degrees(index == currentIndex ? 0 : -10))
     }
 }
 
 extension View {
-    func customSwipeAnimation(index: Int, currentIndex: Int, scale: CGSize, smallScale: CGSize)  -> some View{
-        modifier(SwipeAnimation(index: index, currentIndex: currentIndex, scale: scale, smallScale: smallScale))
+    func customSwipeAnimation(index: Int, currentIndex: Int, scale: CGSize, smallScale: CGSize, edge: Edge)  -> some View{
+        modifier(SwipeAnimation(index: index, currentIndex: currentIndex, scale: scale, smallScale: smallScale, edge: edge))
     }
 }
-
 

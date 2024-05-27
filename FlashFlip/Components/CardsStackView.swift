@@ -22,7 +22,7 @@ struct CardsStackView: View {
             ZStack {
                 ForEach(viewModel.studyCards.indices, id: \.self) { index in
                     StudySessionCard(card: viewModel.studyCards[index], color: index == viewModel.studySessionIndex ? Colors.setColor(using: viewModel.deck.folder!.colorName) : Color.gray)
-                        .customSwipeAnimation(index: index, currentIndex: viewModel.studySessionIndex, scale: scale, smallScale: smallScale)
+                        .customSwipeAnimation(index: index, currentIndex: viewModel.studySessionIndex, scale: scale, smallScale: smallScale, edge: viewModel.mark == .correct ? .trailing : .leading)
                         .disabled(index != viewModel.studySessionIndex)
                 }
             }

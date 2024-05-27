@@ -68,12 +68,12 @@ struct DeckView: View {
                     
                     Section {
                         NavigationLink("Start study session") {
-                            StudySessionView(viewModel: StudySessionViewModel(deck: deck, studyCards: deck.cards.shuffled(), practisingWeakCards: false))
+                            StudySessionView(viewModel: StudySessionViewModel(deck: deck, studyCards: deck.cards.shuffled(), practisingWeakCards: false, mark: .wrong))
                         }
                         .disabled(deck.cards.isEmpty)
                         
                         NavigationLink("Practice weak cards") {
-                            StudySessionView(viewModel: StudySessionViewModel(deck: deck, studyCards: StudySessionViewModel.createWeakCardsSession(deck: deck), practisingWeakCards: true))
+                            StudySessionView(viewModel: StudySessionViewModel(deck: deck, studyCards: StudySessionViewModel.createWeakCardsSession(deck: deck), practisingWeakCards: true, mark: .wrong))
                         }
                         .disabled(deck.cards.isEmpty)
                     }

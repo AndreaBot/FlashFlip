@@ -17,7 +17,8 @@ struct MarkButtonsStack: View {
             Spacer()
             
             Button {
-                viewModel.progressGame(mark: "correct")
+                viewModel.mark = .correct
+                viewModel.progressGame()
             } label: {
                 Image(systemName: "checkmark")
                     .font(.largeTitle).fontWeight(.bold)
@@ -30,7 +31,8 @@ struct MarkButtonsStack: View {
             Spacer()
             
             Button {
-                viewModel.progressGame(mark: "wrong")
+                viewModel.mark = .wrong
+                viewModel.progressGame()
             } label: {
                 Image(systemName: "xmark")
                     .font(.largeTitle).fontWeight(.bold)
