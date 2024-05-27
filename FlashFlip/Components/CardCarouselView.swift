@@ -68,7 +68,7 @@ struct CardCarouselView: View {
                 
                 VStack {
                     Button {
-                        selectedCard = deck.cards[currentIndex]
+                        selectedCard = deck.cards.sorted()[currentIndex]
                     } label: {
                         Text("Edit Card")
                             .padding(.horizontal)
