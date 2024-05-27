@@ -16,43 +16,50 @@ struct EndView: View {
     
     var body: some View {
         VStack {
-            VStack {
-                Text("END OF SESSION")
-                    .font(.title).fontWeight(.semibold)
-                
-                Text("You scored \(viewModel.correctAnswers.count)/\(viewModel.correctAnswers.count + viewModel.wrongAnswers.count)")
-                    .font(.title3)
-            }
+            Text("END OF SESSION")
+                .font(.title).fontWeight(.semibold)
             
-            if !viewModel.correctAnswers.isEmpty {
-                VStack {
-                    Text("Correct answers")
-                    SmallCardsScrollView(cardsArray: viewModel.correctAnswers, deck: viewModel.deck)
-                }
-            }
+            Text("You scored \(viewModel.correctAnswers.count)/\(viewModel.correctAnswers.count + viewModel.wrongAnswers.count)")
+                .font(.title3)
             
-            if !viewModel.wrongAnswers.isEmpty {
-                VStack {
-                    Text("Wrong answers")
-                    SmallCardsScrollView(cardsArray: viewModel.wrongAnswers, deck: viewModel.deck)
-                }
-            }
-            
-            VStack {
-                if !viewModel.practisingWeakCards {
-                    Button("Start again") {
-                        viewModel.startNewSession()
+            List {
+                if !viewModel.correctAnswers.isEmpty {
+                    VStack {
+                        Text("Correct answers")
+                        SmallCardsScrollView(cardsArray: viewModel.correctAnswers, deck: viewModel.deck)
                     }
-                    .buttonStyle(.borderedProminent)
+                    .frame(height: 230)
+                    .listRowInsets(EdgeInsets())
+                    .listRowSeparator(.hidden)
+                    .padding(.top)
                 }
                 
-                Button("Go back") {
-                    dismiss()
+                if !viewModel.wrongAnswers.isEmpty {
+                    VStack {
+                        Text("Wrong answers")
+                        SmallCardsScrollView(cardsArray: viewModel.wrongAnswers, deck: viewModel.deck)
+                    }
+                    .frame(height: 230)
+                    .listRowInsets(EdgeInsets())
+                    .listRowSeparator(.hidden)
+                    .padding(.top)
+                }
+            }
+            .listStyle(.plain)
+            .scrollContentBackground(.hidden)
+            
+            if !viewModel.practisingWeakCards {
+                Button("Start again") {
+                    viewModel.startNewSession()
                 }
                 .buttonStyle(.borderedProminent)
             }
+            
+            Button("Go back") {
+                dismiss()
+            }
+            .buttonStyle(.borderedProminent)
         }
-        .padding(.vertical)
         .onAppear {
             viewModel.deck.sessionsCount += 1
             viewModel.calculateSessionCorrectAnswersPercentage()

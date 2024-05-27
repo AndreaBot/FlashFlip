@@ -18,6 +18,7 @@ struct SmallCardsScrollView: View {
                         .padding([.leading, .bottom], 10)
                 }
             }
+            .scrollIndicators(.visible, axes: .horizontal)
         }
     }
 }
