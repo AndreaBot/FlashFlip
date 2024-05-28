@@ -17,6 +17,7 @@ struct DeckView: View {
     @State private var showCardCreation = false
     @State private var showDeckNameEditing = false
     @State private var showingDeleteConfirmation = false
+    @State private var showingResetAlert = false
     
     var context: ModelContext
     
@@ -97,6 +98,12 @@ struct DeckView: View {
                             Label("Add cards", systemImage: "plus")
                         }
                         
+                        Button {
+                            showingResetAlert = true
+                        } label: {
+                            Label("Reset deck stats", systemImage: "arrow.counterclockwise")
+                        }
+                        
                         Button(role: .destructive) {
                             showingDeleteConfirmation = true
                         } label: {
@@ -120,6 +127,13 @@ struct DeckView: View {
                 }
             } message: {
                 Text("Do you wish to delete this folder and all of its cards?")
+            }
+            .alert("Attention", isPresented: $showingResetAlert) {
+                Button("Confirm", role: .destructive) {
+                    DataManager.resetDeckStats(deck)
+                }
+            } message: {
+                Text("Confirming this action will set all stats for the deck and its cards back to zero.")
             }
             .alert("Edit Deck name", isPresented: $showDeckNameEditing) {
                 TextField("Type the new name", text: $newDeckName)

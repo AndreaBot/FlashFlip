@@ -54,6 +54,15 @@ struct DataManager {
         }
     }
     
+    static func resetDeckStats(_ deck: DeckModel) {
+        deck.sessionsCount = 0
+        deck.averageCorrectAnswers = 0
+        for card in deck.cards {
+            card.correctAnswersCount = 0
+            card.wrongAnswersCount = 0
+        }
+    }
+    
     //MARK: - Cards management
     
     static func createNewCard(_ cardQuestion: String, _ cardAnswer: String, _ deck: DeckModel, _ context: ModelContext ) {
