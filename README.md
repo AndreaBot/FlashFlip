@@ -1,7 +1,7 @@
 # FlashFlip
 <img src="https://github.com/AndreaBot/FlashFlip/assets/128467098/68ceaf88-a78a-4443-a61a-af28180f8588" alt="1024" width="180">
 
-FlashFlip is an ap to create flash cards to study and revise any topic.
+FlashFlip is an app to create flash cards to study and revise any topic.
 
 This app was created as part of Swift24 first hackathon event (https://swift24.dev)
 

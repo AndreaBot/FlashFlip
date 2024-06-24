@@ -19,6 +19,8 @@ struct HomeView: View {
     @State private var selectedFolder: FolderModel?
     @State private var swipedFolder: FolderModel?
     
+    @State private var showingWelcomeMessage = false
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -106,6 +108,20 @@ struct HomeView: View {
         }
         .fullScreenCover(item: $selectedFolder) { selectedFolder in
             CreateFolderView(context: context, folder: selectedFolder, folderIsBeingModified: true)
+        }
+        .onAppear {
+            //THIS IS JUST A QUICK WAY TO LET RECRUITERS SEE SOME EXAMPLE DATA AS THEY LAUNCH THE APP
+            if !allFolders.contains(where: { folderModel in
+                folderModel.name == "Geography"
+            }) {
+                SampleData.createSampleFolder(context)
+                
+            }
+            showingWelcomeMessage = true
+        }
+        .alert("Welcome 👋🏻", isPresented: $showingWelcomeMessage) {
+        } message: {
+            Text(SampleData.welcomeMessage)
         }
     }
 }
